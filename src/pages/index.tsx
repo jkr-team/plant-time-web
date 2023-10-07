@@ -1,26 +1,47 @@
-import { Typewriter } from "../components/Typewriter";
-import { useEffect, useState } from "react";
+import { Typewriter } from '../components/Typewriter';
+import { useEffect, useState } from 'react';
+import { MultiStepForm, FormStepComponent } from '../components/MultiStepForm';
+import { step } from 'next/dist/experimental/testmode/playwright/step';
+
+const steps = [
+  {
+    title: "What's your location?",
+    description: 'We need to know where you are to give you the best recommendations.',
+    component: ({ onSubmit }: { onSubmit: () => void }) => {
+      return (
+        <input
+          type='text'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              console.log('submitted location');
+              onSubmit();
+            }
+          }}
+        ></input>
+      );
+    },
+  },
+  {
+    title: 'What kind of soil do you have?',
+    description: 'We need to know what kind of soil you have to give you the best recommendations.',
+    component: ({ onSubmit }: { onSubmit: () => void }) => {
+      return (
+        <input
+          type='text'
+          onSubmit={() => {
+            console.log('submitted soil');
+            onSubmit();
+          }}
+        ></input>
+      );
+    },
+  },
+];
 
 export default function Home() {
-  const prompts = ["Welcome to Plant Time!", "What's your location?", "What plants do you want to grow?"];
-  const [prompt, setPrompt] = useState(0);
-
   return (
-    <main className="flex flex-col">
-      {prompts.map((value, index) => {
-        if (index < prompt) {
-          return <span key={value} className="text-7xl p-6">{value}</span>;
-        }
-      }).filter((value) => value)}
-      <Typewriter
-        value={prompts[prompt]}
-        key={prompts[prompt]}
-        timing={75}
-        className="text-7xl p-6"
-        onCompleted={() => {
-          setPrompt(Math.min(prompt + 1, prompts.length - 1));
-        }}
-      />
+    <main className='flex flex-col'>
+      <MultiStepForm steps={steps} onSubmit={() => console.log('form fully completed')}></MultiStepForm>
     </main>
   );
 }
