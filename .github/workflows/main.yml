@@ -1,12 +1,12 @@
-name: Build
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main # Adjust this to your default branch if not 'main'
+      - main
 
 jobs:
-  preview:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
     - name: Set up Bun
       uses: oven-sh/setup-bun@v1
       with:
-        bun-version: 'latest' # or specify a specific version
+        bun-version: 'latest'
 
     - name: Install dependencies and build
       run: |
