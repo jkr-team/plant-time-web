@@ -24,7 +24,8 @@ jobs:
         bun run build
 
     - name: Upload to S3
-      uses: plant-time-team/upload-to-s3
+      uses: plant-time-team/upload-to-s3@main
+      if: success()
       with:
         source: 'dist/**'
         destination: ''
