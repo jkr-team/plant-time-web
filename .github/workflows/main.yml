@@ -45,7 +45,7 @@ jobs:
             source: 'dist/**'
             destination: ''
             region: 'ca-central-1'
-            bucket: ${{ secrets.AWS_BUCKET }}
+            bucket: ${{ secrets.AWS_S3_BUCKET_NAME }}
             access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
             secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             clear_destination: 'true'
