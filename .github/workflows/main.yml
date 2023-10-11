@@ -37,12 +37,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-          path: ./dist
+          path: ./
 
       - name: Deploy to S3 Bucket
         uses: plant-time-team/upload-to-s3-action@main
         with:
-            source: 'dist/**'
+            source: '**'
             destination: ''
             region: 'ca-central-1'
             bucket: ${{ secrets.AWS_S3_BUCKET_NAME }}
