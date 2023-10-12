@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { Typewriter } from './Typewriter';
 
-export type FormStepComponent = React.FC<{ onSubmit: () => void }>;
+export type FormStepComponent = React.FC<{ onSubmit?: () => void; submit?: (callback: () => void) => void }>;
 
-type FormStep = {
+export type FormStep = {
   title: string;
-  description?: string;
   component: FormStepComponent;
 };
 
@@ -16,41 +15,52 @@ type MultiStepFormProps = {
 
 export const MultiStepForm = ({ steps, onSubmit }: MultiStepFormProps) => {
   const [step, setStep] = React.useState(0);
-  const Step = steps[step].component;
+  const [isTypewriterDone, setIsTypewriterDone] = React.useState(false);
+  const [formComplete, setFormComplete] = React.useState(false);
 
-  const [showDescription, setShowDescription] = React.useState(false);
-  const [isDoneTyping, setIsDoneTyping] = React.useState(false);
+  const onStepSubmit = () => {
+    if (formComplete) return;
+
+    if (step === steps.length - 1) {
+      onSubmit();
+      setFormComplete(true);
+      return;
+    }
+
+    setStep(step + 1);
+  };
+
+  const StepComponent = steps[step].component;
 
   useEffect(() => {
-    console.log('stepIdx', step);
-    setShowDescription(false);
-    setIsDoneTyping(false);
+    setIsTypewriterDone(false);
   }, [step]);
 
   return (
-    <div>
-      <div className='flex flex-col'>
-        <Typewriter
-          key={steps[step].title}
-          className='text-4xl'
-          value={steps[step].title}
-          timing={50}
-          onCompleted={() => (steps[step].description ? setShowDescription(true) : setIsDoneTyping(true))}
-        />
-        {steps[step].description && showDescription && (
-          <Typewriter
-            key={steps[step].description}
-            className='text-xl'
-            value={steps[step].description || ''}
-            timing={20}
-            onCompleted={() => setIsDoneTyping(true)}
-          />
-        )}
-      </div>
+    <div className='flex flex-col gap-6 w-full font-medium'>
+      {steps.slice(0, step).map((step, i) => (
+        <React.Fragment key={step.title + i}>
+          {step.title.split('\n').map((line, i) => (
+            <span key={line + i} className='text-4xl md:text-6xl'>
+              {line}
+            </span>
+          ))}
 
-      {isDoneTyping && (
+          <StepComponent key={step.title + ' component'} />
+        </React.Fragment>
+      ))}
+
+      <Typewriter
+        key={steps[step].title}
+        className='text-4xl md:text-6xl gap-6'
+        values={steps[step].title.split('\n')}
+        timing={50}
+        onCompleted={() => setIsTypewriterDone(true)}
+      />
+
+      {isTypewriterDone && (
         <div className='animate-fade-in'>
-          <Step key={steps[step].title} onSubmit={() => setStep(step + 1)} />
+          <StepComponent key={steps[step].title + ' component'} onSubmit={onStepSubmit} />
         </div>
       )}
     </div>

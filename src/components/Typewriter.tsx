@@ -1,34 +1,42 @@
 import React, { useEffect, useState } from 'react';
 
 type TypewriterProps = {
-  value: string;
+  values: string[];
   timing: number;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
   onCompleted?: () => void;
-} & React.HTMLAttributes<HTMLHeadingElement | HTMLSpanElement>;
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const Typewriter = ({ value, timing, as = 'span', onCompleted = () => {}, ...props }: TypewriterProps) => {
+export const Typewriter = ({ values, timing, onCompleted = () => {}, ...props }: TypewriterProps) => {
+  const [index, setIndex] = useState(0);
   const [text, setText] = useState('');
-  const Element = as;
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (text.length === value.length) {
-        onCompleted();
-      } else {
-        setText(text + value.charAt(text.length));
+      if (text.length !== values[index].length) {
+        setText(values[index].slice(0, text.length + 1));
+        return;
       }
+
+      if (index === values.length - 1) {
+        onCompleted();
+        return;
+      }
+
+      setIndex(index + 1);
+      setText('');
     }, timing);
 
     return () => clearTimeout(timer);
-  }, [text]);
+  }, [index, text]);
 
   return (
     <React.Fragment>
-      <Element {...props} aria-label={value} className={`flex items-center ${props.className}`}>
-        <span>{text}</span>
-        <span className="inline-block animate-blink">{'|'}</span>
-      </Element>
+      <div {...props} aria-label={values[index]} className={`flex flex-col ${props.className}`}>
+        {values.slice(0, index).map((value, i) => (
+          <span key={value}>{value}</span>
+        ))}
+        <span key={values[index]}>{text}</span>
+      </div>
     </React.Fragment>
   );
 };
