@@ -14,8 +14,8 @@ export const Chat = ({ key, children }: ChatProps) => {
         <div
           key={key ?? index}
           className={classNames('flex w-3/4', {
-            'ml-auto': child.props.type === 'sent',
-            'mr-auto': child.props.type === 'received',
+            'justify-end ml-auto': child.props.type === 'sent',
+            'justify-start mr-auto': child.props.type === 'received',
           })}
         >
           {child}
