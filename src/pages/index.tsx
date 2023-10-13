@@ -20,7 +20,7 @@ export default function Home() {
         updateSoilPH: (soilPH: number) => setUser({ ...user, soilPH }),
       }}
     >
-      <div className='lg:w-1/3 h-screen'>
+      <div className='lg:w-1/3'>
 
       </div>
     </UserContext.Provider>
