@@ -33,6 +33,8 @@ export default function Home() {
           <TextBubble type={'sent'}>Sandy</TextBubble>
           <TextBubble type={'received'}>What's your soil pH?</TextBubble>
           <TextBubble type={'sent'}>7.5</TextBubble>
+          <TextBubble type={'received'}>How much effort are you willing to expend?</TextBubble>
+          <TextBubble type={'sent'}>A lot</TextBubble>
           <TypingIndicator />
         </Chat>
       </div>
