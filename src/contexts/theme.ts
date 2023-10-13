@@ -1,9 +1,9 @@
-import React, { createContext } from "react";
+import { createContext, useEffect, useState } from 'react';
 
-type ThemeContextValue = {
-  theme: 'light' | 'dark';
-  toggleTheme: () => void;
-  setTheme: (theme: 'light' | 'dark') => void;
+export type Theme = 'light' | 'dark';
+
+export type ThemeContextValue = {
+  theme: Theme;
 };
 
 export const ThemeContext = createContext({} as ThemeContextValue);
