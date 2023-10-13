@@ -41,7 +41,7 @@ export const MultiStepForm = ({ steps, onSubmit }: MultiStepFormProps) => {
       {steps.slice(0, step).map((step, i) => (
         <React.Fragment key={step.title + i}>
           {step.title.split('\n').map((line, i) => (
-            <span key={line + i} className='text-4xl md:text-6xl'>
+            <span key={line + i}>
               {line}
             </span>
           ))}
@@ -52,7 +52,7 @@ export const MultiStepForm = ({ steps, onSubmit }: MultiStepFormProps) => {
 
       <Typewriter
         key={steps[step].title}
-        className='text-4xl md:text-6xl gap-6'
+        className='gap-6'
         values={steps[step].title.split('\n')}
         timing={50}
         onCompleted={() => setIsTypewriterDone(true)}

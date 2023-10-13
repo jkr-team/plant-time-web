@@ -15,3 +15,9 @@
     @apply contents;
   }
 }
+
+@layer components {
+  .container {
+    @apply mx-auto px-4 max-w-container;
+  }
+}
