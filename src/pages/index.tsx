@@ -24,12 +24,15 @@ export default function Home() {
         <Chat>
           <TextBubble type={'received'}>Welcome to Plant Time!</TextBubble>
           <TextBubble type={'received'}>
-            A app that helps you decide what you should plant in your garden today!
+            We are here to help you decide what to plant in your garden!
           </TextBubble>
           <TextBubble type={'received'}>To do so we are going to need some information from you.</TextBubble>
           <TextBubble type={'received'}>What's your location?</TextBubble>
           <TextBubble type={'sent'}>6353 Juan Tabo Blvd NE, Apt 6, Albuquerque, New Mexico 87111</TextBubble>
-          <TextBubble type={'received'}>ok i pull up</TextBubble>
+          <TextBubble type={'received'}>What's your soil type?</TextBubble>
+          <TextBubble type={'sent'}>Sandy</TextBubble>
+          <TextBubble type={'received'}>What's your soil pH?</TextBubble>
+          <TextBubble type={'sent'}>7.5</TextBubble>
           <TypingIndicator />
         </Chat>
       </div>
