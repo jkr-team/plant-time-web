@@ -5,11 +5,16 @@ import classNames from 'classnames';
 const robotoCondensed = Roboto_Condensed({ subsets: ['latin'], weight: ['300', '400', '700'] });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
   useEffect(() => {
-    // Set theme based on time of day
-    const hour = new Date().getHours();
-    document.documentElement.classList.add(hour >= 6 && hour < 18 ? 'light' : 'dark');
+    const setTheme = () => {
+      const hour = new Date().getHours();
+      document.documentElement.classList.add(hour >= 6 && hour < 18 ? 'light' : 'dark');
+    };
+
+    const interval = setInterval(setTheme, 1000 * 60 * 60);
+    setTheme();
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
