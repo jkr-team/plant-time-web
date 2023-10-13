@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   darkMode: 'class',
@@ -21,10 +22,15 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        dim: {
+          '0%': { opacity: '0.25' },
+          '100%': { opacity: '1' },
+        }
       },
       animation: {
         blink: 'blink 1s step-start infinite',
         'fade-in': 'fade 0.25s ease-in-out',
+        'dim': 'dim 0.5s ease-in-out infinite alternate'
       },
       colors: {
         sky: {
@@ -46,6 +52,21 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          'animation-delay': (value) => {
+            return {
+              'animation-delay': value,
+            };
+          },
+        },
+        {
+          values: theme('transitionDelay'),
+        }
+      );
+    }),
+  ],
 };
 export default config;
