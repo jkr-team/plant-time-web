@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
 export type User = {
   location: { lat: number; lng: number };
@@ -6,7 +6,7 @@ export type User = {
   soilPH: number;
 };
 
-type UserContextValue = {
+export type UserContextValue = {
   user: User;
   updateLocation: (lat: number, lng: number) => void;
   updateSoilType: (soilType: string) => void;
