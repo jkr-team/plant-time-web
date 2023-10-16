@@ -1,16 +1,21 @@
 import React, { ReactElement } from 'react';
 import classNames from 'classnames';
-import { TextBubbleProps } from './TextBubble';
+import { TextBubble, TextBubbleProps } from './TextBubble';
+import { flattenReactFragments } from '../utils/flattenReactFragments';
 
 export interface ChatProps {
-  children: ReactElement<TextBubbleProps>[];
+  children: ReactElement<TextBubbleProps>[] | ReactElement<TextBubbleProps>;
   key?: React.Key;
 }
 
 export const Chat = ({ key, children }: ChatProps) => {
+  const flattened = flattenReactFragments(children).filter(
+    (child) => React.isValidElement(child) && child.type === TextBubble
+  ) as ReactElement<TextBubbleProps>[];
+
   return (
     <div className='flex flex-col gap-2 w-full h-full overflow-y-auto'>
-      {children.map((child, index) => (
+      {React.Children.map(flattened, (child, index) => (
         <div
           key={key ?? index}
           className={classNames('flex w-3/4', {
