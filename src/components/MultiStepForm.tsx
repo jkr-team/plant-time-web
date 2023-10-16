@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { TextBubble } from './TextBubble';
 import { Chat } from './Chat';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 export type FormStep = {
   id: string;
@@ -73,7 +75,7 @@ export const MultiStepForm = ({ steps, onSubmit }: MultiStepFormProps) => {
         </div>
 
         <button className='w-12 border-2 border-black border-opacity-10 shadow-md rounded-full dark:border-white dark:border-opacity-30'>
-          S
+          <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </form>
     </div>
