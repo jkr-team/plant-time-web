@@ -21,7 +21,7 @@ export default function Home() {
         updateSoilPH: (soilPH: number) => setUser({ ...user, soilPH }),
       }}
     >
-      <div className='lg:w-1/3 flex flex-col flex-1 bg-white dark:bg-zinc-800 border-8 border-zinc-700 rounded-3xl'>
+      <div className='md:w-1/2 lg:w-1/3 flex flex-col flex-1 bg-white shadow-lg dark:bg-zinc-800 border-8 border-zinc-700 rounded-3xl'>
         <MultiStepForm
           steps={[
             {
