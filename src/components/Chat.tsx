@@ -14,7 +14,7 @@ export const Chat = ({ key, children }: ChatProps) => {
   ) as ReactElement<TextBubbleProps>[];
 
   return (
-    <div className='flex flex-col gap-2 w-full h-full overflow-y-auto'>
+    <div className='flex flex-col w-full h-full overflow-y-auto'>
       {React.Children.map(flattened, (child, index) => (
         <div
           key={key ?? index}

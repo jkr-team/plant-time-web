@@ -21,27 +21,33 @@ export default function Home() {
         updateSoilPH: (soilPH: number) => setUser({ ...user, soilPH }),
       }}
     >
-      <div className='md:w-1/2 lg:w-1/3 flex flex-col flex-1 bg-white shadow-lg dark:bg-zinc-800 border-8 border-zinc-700 rounded-3xl'>
-        <MultiStepForm
-          steps={[
-            {
-              id: 'location-step',
-              prompt: ['Welcome to Plant Time!', "I'm here to help you find the best plants for your garden."],
-              component: <input name="location" className="w-full bg-transparent" />,
-            },
-            {
-              id: 'soil-type-step',
-              prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
-              component: <input name="location" className="w-full bg-transparent" />,
-            },
-            {
-              id: 'soil-ph-step',
-              prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
-              component: <input name="location" className="w-full bg-transparent" />,
-            },
-          ]}
-          onSubmit={() => {}}
-        />
+      <div className='flex flex-1 flex-col items-center justify-end'>
+        <div className='md:w-1/2 lg:w-1/3 animate-fly-in-y flex max-h-[60rem] flex-col flex-1 bg-white shadow-lg dark:bg-zinc-800 rounded-3xl'>
+          <MultiStepForm
+            steps={[
+              {
+                id: 'location-step',
+                prompt: [
+                  'Welcome to Plant Time!',
+                  "We're here to help you to decide what to plant in your garden.",
+                  'To get started, please let us know your location. (We will not store this information.)',
+                ],
+                component: <input name='location' className='w-full bg-transparent' key='location' />,
+              },
+              {
+                id: 'soil-type-step',
+                prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
+                component: <input name='location' className='w-full bg-transparent' key='soil-type' />,
+              },
+              {
+                id: 'soil-ph-step',
+                prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
+                component: <input name='location' className='w-full bg-transparent' key='soil-ph' />,
+              },
+            ]}
+            onSubmit={() => {}}
+          />
+        </div>
       </div>
     </UserContext.Provider>
   );
