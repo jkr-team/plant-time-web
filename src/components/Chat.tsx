@@ -4,7 +4,7 @@ import { TextBubble, TextBubbleProps } from './TextBubble';
 import { flattenReactFragments } from '../utils/flattenReactFragments';
 
 export interface ChatProps {
-  children: ReactElement<TextBubbleProps>[] | ReactElement<TextBubbleProps>;
+  children: React.ReactNode;
   key?: React.Key;
 }
 
