@@ -3,7 +3,7 @@ import { Chat } from '../components/Chat';
 import { useState } from 'react';
 import { User, UserContext } from '../contexts/user';
 import { TypingIndicator } from '../components/TypingIndicator';
-import { MultiStepForm } from '../components/MultiStepForm';
+import { ChatForm } from '../components/ChatForm';
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -23,7 +23,7 @@ export default function Home() {
     >
       <div className='flex flex-1 flex-col items-center justify-end'>
         <div className='md:w-1/2 lg:w-1/3 animate-fly-in-y flex max-h-[60rem] flex-col flex-1 bg-white shadow-lg dark:bg-zinc-800 rounded-3xl'>
-          <MultiStepForm
+          <ChatForm
             steps={[
               {
                 id: 'location-step',
