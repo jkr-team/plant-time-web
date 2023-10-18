@@ -32,17 +32,17 @@ export default function Home() {
                   "We're here to help you to decide what to plant in your garden.",
                   'To get started, please let us know your location. (We will not store this information.)',
                 ],
-                component: <input name='location' className='w-full bg-transparent' key='location' />,
+                onSubmit: (value) => console.log(value)
               },
               {
                 id: 'soil-type-step',
                 prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
-                component: <input name='location' className='w-full bg-transparent' key='soil-type' />,
+                onSubmit: (value) => console.log(value)
               },
               {
                 id: 'soil-ph-step',
                 prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
-                component: <input name='location' className='w-full bg-transparent' key='soil-ph' />,
+                onSubmit: (value) => console.log(value)
               },
             ]}
             onSubmit={() => {}}

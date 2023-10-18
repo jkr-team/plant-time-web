@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { TextBubble } from './TextBubble';
 import { Chat } from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { TypingIndicator } from './TypingIndicator';
-import { random } from 'nanoid';
 import { randomIntInRange } from '../utils/random';
 
 export type FormStep = {
   id: string;
   prompt: string[];
-  component: React.ReactNode;
-  validate?: (value: string | number) => boolean;
+  onSubmit: (value: string | number) => void;
+  validate?: (value: string | number) => string; // Returns an error message if the input is invalid, or an empty string if the input is valid (runs every time the user types)
+  asyncValidate?: (value: string | number) => Promise<string>; // An asynchronous validator that returns an error message if the input is invalid, or an empty string if the input is valid (only runs once the user submits this step)
 };
 
 type CompletedFormStep = {
@@ -22,10 +22,34 @@ type CompletedFormStep = {
 type ChatFormProps = {
   steps: FormStep[];
   onSubmit: () => void;
-  disabled?: boolean;
 };
 
-export const ChatForm = ({ steps, onSubmit, disabled }: ChatFormProps) => {
+export const ChatFormError = ({ error }: { error: string }) => (
+  <div className='absolute px-4 py-2 bottom-full left-0 text-md text-red-700 w-full dark:text-red-400'>
+    <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
+    <span>{error}</span>
+  </div>
+);
+
+export const ChatFormInput = ({ onInput }: { onInput: (input: string) => void }) => (
+  <input
+    name='chat-form-input'
+    className='flex-1 relative flex bg-transparent rounded-3xl border-2 border-black border-opacity-10 text-xl py-2 px-4 shadow-md dark:border-white dark:border-opacity-30'
+    autoFocus={true}
+    onInput={(e) => onInput((e.target as HTMLInputElement).value)}
+  />
+);
+
+export const ChatFormSubmitButton = () => (
+  <button
+    className='w-12 border-2 border-black border-opacity-10 shadow-md rounded-full cursor-pointer dark:border-white dark:border-opacity-30'
+    type='submit'
+  >
+    <FontAwesomeIcon icon={faPaperPlane} />
+  </button>
+);
+
+export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   // The index of the current step
   const [step, setStep] = useState(0);
 
@@ -38,16 +62,65 @@ export const ChatForm = ({ steps, onSubmit, disabled }: ChatFormProps) => {
   // The error message to display to the user if their input is invalid
   const [error, setError] = useState<string>('');
 
+  // A boolean indicating whether we are waiting for the async validation to complete
+  const [isAsyncValidating, setIsAsyncValidating] = useState<boolean>(false);
+
   const currentStep = steps[step];
 
-  useEffect(() => {
-    const delay = randomIntInRange(1000, 3000);
-    const timeout = setTimeout(() => {
+  const onSubmitStep = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      if (currentStep && line < currentStep.prompt.length) {
-        setLine(line + 1);
+    // If the typing indicator is still typing, we have gone through the entire form, there is an error with the user's input, or an async validator is running, don't submit the step
+    if (!currentStep || line < currentStep.prompt.length || error !== '' || isAsyncValidating) {
+      return;
+    }
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const value = Array.from(formData.values()).join(' ');
+
+    if (currentStep.asyncValidate) {
+      // Set the async validating flag to true so that the user cannot submit the form again
+      setIsAsyncValidating(true);
+
+      // Run the async validator
+      const asyncError = await currentStep.asyncValidate(value);
+      setIsAsyncValidating(false);
+
+      // If there is an error, set the error message and return
+      if (asyncError !== '') {
+        setError(asyncError);
+        return;
       }
-    }, delay);
+    }
+
+    // If we have reached this point, the user's input is valid, so submit the step and move on to the next step
+    currentStep.onSubmit(value);
+    setCompletedSteps([...completedSteps, { step: currentStep, value }]);
+
+    // If we have run through all the steps, submit the form
+    if (step + 1 >= steps.length) {
+      onSubmit();
+    }
+
+    setStep(step + 1);
+    setLine(0);
+  };
+
+  const onUserInput = (input: string) => {
+    if (currentStep && currentStep.validate) {
+      setError(currentStep.validate(input));
+    }
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => {
+        if (currentStep && line < currentStep.prompt.length) {
+          setLine(line + 1);
+        }
+      },
+      randomIntInRange(1000, 2000)
+    );
 
     return () => clearTimeout(timeout);
   }, [line]);
@@ -88,33 +161,11 @@ export const ChatForm = ({ steps, onSubmit, disabled }: ChatFormProps) => {
 
       <form
         className='flex relative align-middle rounded-br-3xl dark:bg-zinc-700 rounded-bl-3xl w-full gap-2 p-4 shadow-md'
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target as HTMLFormElement);
-          const value = Array.from(formData.values()).join(' ');
-
-          setCompletedSteps([...completedSteps, { step: currentStep, value }]);
-
-          if (step + 1 >= steps.length) {
-            onSubmit();
-          }
-
-          setStep(step + 1);
-          setLine(0);
-        }}
+        onSubmit={onSubmitStep}
       >
-        <div className='absolute px-4 bottom-full left-0 text-md text-red-700 w-full dark:text-red-400'>{error}</div>
-
-        <div className="flex-1 relative flex rounded-3xl border-2 border-black border-opacity-10 text-xl py-2 px-4 shadow-md dark:border-white dark:border-opacity-30 before:content-['\200B'] before:block">
-          {currentStep && (line >= currentStep.prompt.length) && currentStep.component}
-        </div>
-
-        <button
-          className='w-12 border-2 border-black border-opacity-10 shadow-md rounded-full cursor-pointer dark:border-white dark:border-opacity-30'
-          disabled={disabled || step >= steps.length}
-        >
-          <FontAwesomeIcon icon={faPaperPlane} />
-        </button>
+        {error && <ChatFormError error={error} />}
+        <ChatFormInput onInput={onUserInput} />
+        <ChatFormSubmitButton />
       </form>
     </div>
   );
