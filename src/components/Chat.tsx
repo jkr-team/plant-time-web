@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import classNames from 'classnames';
-import { TextBubble, TextBubbleProps } from './TextBubble';
+import { ChatBubble, TextBubbleProps } from './ChatBubble';
 import { flattenReactFragments } from '../utils/flattenReactFragments';
-import { TypingIndicator } from './TypingIndicator';
+import { ChatTypingIndicator } from './ChatTypingIndicator';
 
 export interface ChatProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export interface ChatProps {
 
 export const Chat = ({ key, children }: ChatProps) => {
   const flattened = flattenReactFragments(children).filter(
-    (child) => React.isValidElement(child) && (child.type === TextBubble || child.type === TypingIndicator)
+    (child) => React.isValidElement(child) && (child.type === ChatBubble || child.type === ChatTypingIndicator)
   ) as ReactElement<TextBubbleProps>[];
 
   return (

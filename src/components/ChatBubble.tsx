@@ -6,7 +6,7 @@ export interface TextBubbleProps {
   type: 'sent' | 'received';
 }
 
-export const TextBubble = ({ type, children }: TextBubbleProps) => {
+export const ChatBubble = ({ type, children }: TextBubbleProps) => {
   return (
     <div
       className={classNames(

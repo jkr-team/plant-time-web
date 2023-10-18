@@ -1,8 +1,5 @@
-import { TextBubble } from '../components/TextBubble';
-import { Chat } from '../components/Chat';
 import { useState } from 'react';
 import { User, UserContext } from '../contexts/user';
-import { TypingIndicator } from '../components/TypingIndicator';
 import { ChatForm } from '../components/ChatForm';
 
 export default function Home() {

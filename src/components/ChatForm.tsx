@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TextBubble } from './TextBubble';
+import { ChatBubble } from './ChatBubble';
 import { Chat } from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { TypingIndicator } from './TypingIndicator';
+import { ChatTypingIndicator } from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
 
 export type FormStep = {
@@ -23,6 +23,12 @@ type ChatFormProps = {
   steps: FormStep[];
   onSubmit: () => void;
 };
+
+export const ChatFormHeader = () => (
+  <div className='flex items-center justify-center w-full p-4 bg-green-600 text-white dark:bg-green-200 dark:text-black rounded-tr-3xl rounded-tl-3xl text-3xl'>
+    Plant Time
+  </div>
+);
 
 export const ChatFormError = ({ error }: { error: string }) => (
   <div className='absolute px-4 py-2 bottom-full left-0 text-md text-red-700 w-full dark:text-red-400'>
@@ -127,35 +133,33 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
 
   return (
     <div className='flex flex-1 flex-col w-full h-full gap-2'>
-      <div className='flex items-center justify-center w-full p-4 bg-green-600 text-white dark:bg-green-200 dark:text-black rounded-tr-3xl rounded-tl-3xl text-3xl'>
-        Plant Time
-      </div>
+      <ChatFormHeader />
 
       <div className='flex-1 w-full p-4'>
         <Chat>
           {completedSteps.map(({ step, value }, index) => (
             <>
               {step.prompt.map((line, index) => (
-                <TextBubble key={index} type={'received'}>
+                <ChatBubble key={index} type={'received'}>
                   {line}
-                </TextBubble>
+                </ChatBubble>
               ))}
 
-              <TextBubble type={'sent'}>{value}</TextBubble>
+              <ChatBubble type={'sent'}>{value}</ChatBubble>
             </>
           ))}
 
           {currentStep && (
             <>
               {currentStep.prompt.slice(0, line).map((line, index) => (
-                <TextBubble key={index} type={'received'}>
+                <ChatBubble key={index} type={'received'}>
                   {line}
-                </TextBubble>
+                </ChatBubble>
               ))}
             </>
           )}
 
-          {currentStep && line < currentStep.prompt.length && <TypingIndicator />}
+          {currentStep && line < currentStep.prompt.length && <ChatTypingIndicator />}
         </Chat>
       </div>
 
