@@ -25,8 +25,8 @@ type ChatFormProps = {
 };
 
 export const ChatFormHeader = () => (
-  <div className='flex items-center justify-center w-full p-4 bg-green-600 text-white dark:bg-green-200 dark:text-black rounded-tr-3xl rounded-tl-3xl text-3xl'>
-    Plant Time
+  <div className='flex items-center justify-center w-full p-4 bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-tr-3xl rounded-tl-3xl text-3xl'>
+    <span>Plant Time</span>
   </div>
 );
 
@@ -132,10 +132,10 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   }, [line]);
 
   return (
-    <div className='flex flex-1 flex-col w-full h-full gap-2'>
+    <div className='flex flex-1 flex-col w-full h-full'>
       <ChatFormHeader />
 
-      <div className='flex-1 w-full p-4'>
+      <div className='flex-1 w-full p-4 bg-white dark:bg-zinc-900'>
         <Chat>
           {completedSteps.map(({ step, value }, index) => (
             <>
@@ -164,7 +164,7 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
       </div>
 
       <form
-        className='flex relative align-middle rounded-br-3xl dark:bg-zinc-700 rounded-bl-3xl w-full gap-2 p-4 shadow-md'
+        className='flex relative align-middle rounded-br-3xl bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-bl-3xl w-full gap-2 p-4 shadow-md'
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}
