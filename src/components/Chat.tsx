@@ -15,13 +15,13 @@ export const Chat = ({ key, children }: ChatProps) => {
   ) as ReactElement<TextBubbleProps>[];
 
   return (
-    <div className='flex flex-col w-full h-full overflow-y-auto'>
+    <div className='flex h-full w-full flex-col overflow-y-auto'>
       {React.Children.map(flattened, (child, index) => (
         <div
           key={key ?? index}
           className={classNames('flex w-3/4', {
-            'justify-end ml-auto': child.props.type === 'sent',
-            'justify-start mr-auto': child.props.type === 'received',
+            'ml-auto justify-end': child.props.type === 'sent',
+            'mr-auto justify-start': child.props.type === 'received',
           })}
         >
           {child}

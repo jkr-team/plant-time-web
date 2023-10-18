@@ -18,8 +18,8 @@ export default function Home() {
         updateSoilPH: (soilPH: number) => setUser({ ...user, soilPH }),
       }}
     >
-      <div className='flex flex-1 flex-col items-center justify-end'>
-        <div className='md:w-1/2 lg:w-1/3 flex max-h-[60rem] flex-col flex-1 bg-white shadow-lg dark:bg-zinc-800 rounded-3xl'>
+      <div className='flex flex-1 flex-col items-center justify-center md:p-14'>
+        <div className='flex w-full flex-1 flex-col rounded-3xl shadow-lg dark:bg-zinc-800'>
           <ChatForm
             steps={[
               {
@@ -29,17 +29,17 @@ export default function Home() {
                   "We're here to help you to decide what to plant in your garden.",
                   'To get started, please let us know your location. (We will not store this information.)',
                 ],
-                onSubmit: (value) => console.log(value)
+                onSubmit: (value) => console.log(value),
               },
               {
                 id: 'soil-type-step',
                 prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
-                onSubmit: (value) => console.log(value)
+                onSubmit: (value) => console.log(value),
               },
               {
                 id: 'soil-ph-step',
                 prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
-                onSubmit: (value) => console.log(value)
+                onSubmit: (value) => console.log(value),
               },
             ]}
             onSubmit={() => {}}

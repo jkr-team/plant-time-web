@@ -29,12 +29,12 @@ const config: Config = {
         flyInY: {
           '0%': { transform: 'translateY(100%)' },
           '100%': { transform: 'translateY(0)' },
-        }
+        },
       },
       animation: {
         blink: 'blink 1s step-start infinite',
         'fade-in': 'fade 0.25s ease-in-out',
-        'dim': 'dim 0.5s ease-in-out infinite alternate',
+        dim: 'dim 0.5s ease-in-out infinite alternate',
         'fly-in-y': 'flyInY .75s ease-in-out',
       },
       colors: {

@@ -25,14 +25,14 @@ type ChatFormProps = {
 };
 
 export const ChatFormHeader = () => (
-  <div className='flex items-center h-[3.5em] w-full p-2 bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-tr-3xl rounded-tl-3xl text-xl'>
-    <img className='w-[3em] absolute' alt="Plant Time Logo" src="/logo.svg"/>
+  <div className='flex h-[3.5em] w-full items-center bg-zinc-100 p-2 text-xl text-black dark:bg-zinc-700 dark:text-white md:rounded-tl-3xl md:rounded-tr-3xl'>
+    <img className='absolute w-[3em]' alt='Plant Time Logo' src='/logo.svg' />
     <span className='mx-auto'>Plant Time</span>
   </div>
 );
 
 export const ChatFormError = ({ error }: { error: string }) => (
-  <div className='absolute px-4 py-2 bottom-full left-0 text-md text-red-700 w-full dark:text-red-400'>
+  <div className='text-md absolute bottom-full left-0 w-full px-4 py-2 text-red-700 dark:text-red-400'>
     <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
     <span>{error}</span>
   </div>
@@ -41,7 +41,7 @@ export const ChatFormError = ({ error }: { error: string }) => (
 export const ChatFormInput = ({ onInput }: { onInput: (input: string) => void }) => (
   <input
     name='chat-form-input'
-    className='flex-1 relative flex bg-transparent rounded-3xl border-2 border-black border-opacity-10 text-xl py-2 px-4 shadow-md dark:border-white dark:border-opacity-30'
+    className='relative flex flex-1 rounded-3xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
     autoFocus={true}
     onInput={(e) => onInput((e.target as HTMLInputElement).value)}
   />
@@ -49,7 +49,7 @@ export const ChatFormInput = ({ onInput }: { onInput: (input: string) => void })
 
 export const ChatFormSubmitButton = () => (
   <button
-    className='w-12 border-2 border-black border-opacity-10 shadow-md rounded-full cursor-pointer dark:border-white dark:border-opacity-30'
+    className='w-12 cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md dark:border-white dark:border-opacity-30'
     type='submit'
   >
     <FontAwesomeIcon icon={faPaperPlane} />
@@ -133,10 +133,10 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   }, [line]);
 
   return (
-    <div className='flex flex-1 flex-col w-full h-full'>
+    <div className='flex h-full w-full flex-1 flex-col'>
       <ChatFormHeader />
 
-      <div className='flex-1 w-full p-4 bg-white dark:bg-zinc-900'>
+      <div className='w-full flex-1 bg-white p-4 dark:bg-zinc-900'>
         <Chat>
           {completedSteps.map(({ step, value }, index) => (
             <>
@@ -165,7 +165,7 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
       </div>
 
       <form
-        className='flex relative align-middle rounded-br-3xl bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-bl-3xl w-full gap-2 p-4 shadow-md'
+        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-700 dark:text-white md:rounded-bl-3xl md:rounded-br-3xl'
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}

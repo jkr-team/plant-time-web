@@ -19,7 +19,7 @@ export const TextInput = ({ type, ...props }: TextInputProps) => {
   return (
     <div
       ref={ref}
-      className='relative h-full w-full bg-sky-100 rounded-md border-b-2 border-sky-600 dark:border-gray-700'
+      className='relative h-full w-full rounded-md border-b-2 border-sky-600 bg-sky-100 dark:border-gray-700'
     >
       <input
         {...props}
@@ -33,16 +33,16 @@ export const TextInput = ({ type, ...props }: TextInputProps) => {
             props.onInput(e);
           }
         }}
-        className={'w-full h-full bg-transparent focus:outline-none p-2'}
+        className={'h-full w-full bg-transparent p-2 focus:outline-none'}
       />
 
       {isFocusedWithin && (
-        <div className='absolute flex flex-col top-full left-0 w-full bg-white dark:bg-gray-800 rounded-md shadow-md overflow-y-auto bg-transparent'>
+        <div className='absolute left-0 top-full flex w-full flex-col overflow-y-auto rounded-md bg-transparent bg-white shadow-md dark:bg-gray-800'>
           {suggestions.map((suggestion) => (
             <button
               key={suggestion.id}
               onClick={() => props.onSuggestionSelect && props.onSuggestionSelect(suggestion)}
-              className='flex items-center justify-start w-full p-2 border-b border-gray-300 bg-inherit dark:border-gray-700'
+              className='flex w-full items-center justify-start border-b border-gray-300 bg-inherit p-2 dark:border-gray-700'
             >
               {suggestion.value}
             </button>

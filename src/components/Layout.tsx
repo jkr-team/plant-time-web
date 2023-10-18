@@ -20,11 +20,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={classNames(
-        'flex flex-col flex-1 p-4 bg-sky-300 text-black transition-colors dark:bg-sky-900 dark:text-white',
+        'flex flex-1 flex-col bg-sky-300 text-black transition-colors dark:bg-sky-900 dark:text-white',
         robotoCondensed.className
       )}
     >
-      <main className='flex flex-1 flex-col mx-auto w-full max-w-container'>{children}</main>
+      <main className='mx-auto flex w-full max-w-container flex-1 flex-col'>{children}</main>
     </div>
   );
 }
