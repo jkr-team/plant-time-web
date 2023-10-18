@@ -25,8 +25,9 @@ type ChatFormProps = {
 };
 
 export const ChatFormHeader = () => (
-  <div className='flex items-center justify-center w-full p-4 bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-tr-3xl rounded-tl-3xl text-3xl'>
-    <span>Plant Time</span>
+  <div className='flex items-center h-[3.5em] w-full p-2 bg-zinc-100 text-black dark:bg-zinc-700 dark:text-white rounded-tr-3xl rounded-tl-3xl text-xl'>
+    <img className='w-[3em] absolute' alt="Plant Time Logo" src="/logo.svg"/>
+    <span className='mx-auto'>Plant Time</span>
   </div>
 );
 
