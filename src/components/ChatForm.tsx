@@ -9,9 +9,8 @@ import { randomIntInRange } from '../utils/random';
 export type FormStep = {
   id: string;
   prompt: string[];
-  onSubmit: (value: string | number) => void;
-  validate?: (value: string | number) => string; // Returns an error message if the input is invalid, or an empty string if the input is valid (runs every time the user types)
-  asyncValidate?: (value: string | number) => Promise<string>; // An asynchronous validator that returns an error message if the input is invalid, or an empty string if the input is valid (only runs once the user submits this step)
+  // Callback for when the user submits this step, return a promise that resolves to a string, if the string is empty, the user will advance to the next step, otherwise the string will be treated as an error message that will be displayed to the user.
+  onSubmit: (value: string) => Promise<string>;
 };
 
 type CompletedFormStep = {
@@ -32,12 +31,11 @@ export const ChatFormError = ({ error }: { error: string }) => (
   </div>
 );
 
-export const ChatFormInput = ({ onInput }: { onInput: (input: string) => void }) => (
+export const ChatFormInput = () => (
   <input
     name='chat-form-input'
     className='relative flex flex-1 rounded-3xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
     autoFocus={true}
-    onInput={(e) => onInput((e.target as HTMLInputElement).value)}
   />
 );
 
@@ -73,7 +71,7 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
   const [error, setError] = useState<string>('');
 
   // A boolean indicating whether we are waiting for the async validation to complete
-  const [isAsyncValidating, setIsAsyncValidating] = useState<boolean>(false);
+  const [isValidating, setIsValidating] = useState<boolean>(false);
 
   // A boolean indicating whether we should show the submitted message
   const [showSubmittedMessage, setShowSubmittedMessage] = useState<boolean>(false);
@@ -83,42 +81,34 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
   const onSubmitStep = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // If the typing indicator is still typing, we have gone through the entire form, there is an error with the user's input, or an async validator is running, don't submit the step
-    if (!currentStep || line < currentStep.prompt.length || error !== '' || isAsyncValidating) {
+    // If the typing indicator is still typing, we have gone through the entire form, or the user's input is still being validated, don't submit the step
+    if (!currentStep || line < currentStep.prompt.length || isValidating) {
       return;
     }
 
     const formData = new FormData(e.target as HTMLFormElement);
     const value = Array.from(formData.values()).join(' ');
 
-    if (currentStep.asyncValidate) {
-      // Set the async validating flag to true so that the user cannot submit the form again
-      setIsAsyncValidating(true);
+    // The user has submitted the step, but we need to wait for the onSubmit callback to validate their input before advancing to the next step
+    setIsValidating(true);
 
-      // Run the async validator
-      const asyncError = await currentStep.asyncValidate(value);
-      setIsAsyncValidating(false);
+    const submitError = await currentStep.onSubmit(value);
 
-      // If there is an error, set the error message and return
-      if (asyncError !== '') {
-        setError(asyncError);
-        return;
-      }
+    // Validation is complete, so we can set the error message
+    setError(submitError);
+    setIsValidating(false);
+
+    // If the user's input is invalid, return and don't advance to the next step
+    if (submitError !== '') {
+      return;
     }
 
-    // If we have reached this point, the user's input is valid, so submit the step and move on to the next step
-    currentStep.onSubmit(value);
+    // Otherwise, add the completed step to the array of completed steps
     setCompletedSteps([...completedSteps, { step: currentStep, value }]);
 
     // Advance to the next step
     setStep(step + 1);
     setLine(0);
-  };
-
-  const onUserInput = (input: string) => {
-    if (currentStep && currentStep.validate) {
-      setError(currentStep.validate(input));
-    }
   };
 
   useEffect(() => {
@@ -182,7 +172,7 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}
-        <ChatFormInput onInput={onUserInput} />
+        <ChatFormInput />
         <ChatFormSubmitButton />
       </form>
     </div>

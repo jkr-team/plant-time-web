@@ -42,18 +42,38 @@ export default function Home() {
                   "We're here to help you to decide what to plant in your garden.",
                   'To get started, please let us know your location. (We will not store this information.)',
                 ],
-                onSubmit: (value) => console.log(value),
+                onSubmit: async (value) => {
+                  console.log(value);
+                  return '';
+                },
               },
               {
                 id: 'soil-type-step',
                 prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
-                onSubmit: (value) => console.log(value),
+                onSubmit: async (value) => {
+                  switch (value.toLowerCase()) {
+                    case 'sandy':
+                    case 'loamy':
+                    case 'clay':
+                      return '';
+                    default:
+                      return 'Soil type must be sandy, loamy, or clay.';
+                  }
+                },
               },
               {
                 id: 'soil-ph-step',
                 prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
-                onSubmit: (value) => console.log(value),
-              }
+                onSubmit: async (value) => {
+                  const parsedValue = parseFloat(value);
+
+                  if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 14) {
+                    return 'Soil pH must be a number between 0 and 14.';
+                  }
+
+                  return '';
+                },
+              },
             ]}
             onSubmit={() => console.log('Submitted!')}
             submittedMessage='Thank you! Please wait while we find you some recommendations.'
