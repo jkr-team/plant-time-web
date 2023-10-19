@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { User, UserContext } from '../contexts/user';
 import { ChatForm } from '../components/ChatForm';
+import { Spinner } from '../components/Spinner';
+
+const FormCompletedScreen = () => (
+  <div className='animate-in slide-in-from-bottom absolute left-0 top-0 z-10 flex h-full w-full flex-col items-center justify-center gap-24 rounded-3xl bg-green-200 p-2 text-black duration-1000 ease-in-out dark:bg-zinc-900 dark:text-white'>
+    <span className='text-center text-2xl'>Thank you! Please wait while we find you some recommendations. </span>
+    <div className='text-9xl'>
+      <Spinner />
+    </div>
+  </div>
+);
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -8,6 +18,8 @@ export default function Home() {
     soilType: '',
     soilPH: NaN,
   } as User);
+
+  const [formCompleted, setFormCompleted] = useState(false);
 
   return (
     <UserContext.Provider
@@ -19,7 +31,7 @@ export default function Home() {
       }}
     >
       <div className='flex flex-1 flex-col items-center justify-center md:p-14'>
-        <div className='flex w-full flex-1 flex-col rounded-3xl shadow-lg dark:bg-zinc-800'>
+        <div className='relative flex w-fit flex-1 flex-col overflow-hidden rounded-3xl shadow-lg'>
           <ChatForm
             steps={[
               {
@@ -42,8 +54,10 @@ export default function Home() {
                 onSubmit: (value) => console.log(value),
               },
             ]}
-            onSubmit={() => {}}
+            onSubmit={() => setFormCompleted(true)}
           />
+
+          {formCompleted && <FormCompletedScreen />}
         </div>
       </div>
     </UserContext.Provider>
