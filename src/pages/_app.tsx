@@ -3,12 +3,17 @@ import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { Roboto_Condensed } from 'next/font/google';
 config.autoAddCss = false;
+
+const robotoCondensed = Roboto_Condensed({ subsets: ['latin'], weight: ['300', '400', '700'] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <div className={`contents ${robotoCondensed.className}`}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </div>
   );
 }
