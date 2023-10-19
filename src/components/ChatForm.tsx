@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ChatBubble } from './ChatBubble';
 import { Chat } from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faLeaf, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { ChatTypingIndicator } from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
 
@@ -25,9 +25,8 @@ type ChatFormProps = {
 };
 
 export const ChatFormHeader = () => (
-  <div className='flex h-[3.5em] w-full items-center bg-zinc-100 p-2 text-xl text-black dark:bg-zinc-700 dark:text-white md:rounded-tl-3xl md:rounded-tr-3xl'>
-    <img className='absolute w-[3em]' alt='Plant Time Logo' src='/logo.svg' />
-    <span className='mx-auto'>Plant Time</span>
+  <div className='flex  w-full items-center bg-zinc-100 p-2 text-xl text-black dark:bg-zinc-700 dark:text-white md:rounded-tl-3xl md:rounded-tr-3xl'>
+    <span className='mx-auto p-1'>Plant Time</span>
   </div>
 );
 
@@ -54,6 +53,15 @@ export const ChatFormSubmitButton = () => (
   >
     <FontAwesomeIcon icon={faPaperPlane} />
   </button>
+);
+
+export const ChatFormBGImage = () => (
+  <div
+    className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-9xl text-green-600 opacity-10
+   dark:text-zinc-500'
+  >
+    <FontAwesomeIcon icon={faLeaf} />
+  </div>
 );
 
 export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
@@ -133,39 +141,41 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   }, [line]);
 
   return (
-    <div className='flex h-full w-full flex-1 flex-col'>
-      <ChatFormHeader />
+    <div className='flex h-full w-full flex-1 flex-col md:w-[568px]'>
+      <div className=' relative w-full flex-1 bg-white p-4 dark:bg-zinc-900 md:rounded-tl-3xl md:rounded-tr-3xl'>
+        <ChatFormBGImage />
 
-      <div className='w-full flex-1 bg-white p-4 dark:bg-zinc-900'>
-        <Chat>
-          {completedSteps.map(({ step, value }, index) => (
-            <>
-              {step.prompt.map((line, index) => (
-                <ChatBubble key={index} type={'received'}>
-                  {line}
-                </ChatBubble>
-              ))}
+        <div className='relative z-10'>
+          <Chat>
+            {completedSteps.map(({ step, value }, index) => (
+              <>
+                {step.prompt.map((line, index) => (
+                  <ChatBubble key={index} type={'received'}>
+                    {line}
+                  </ChatBubble>
+                ))}
 
-              <ChatBubble type={'sent'}>{value}</ChatBubble>
-            </>
-          ))}
+                <ChatBubble type={'sent'}>{value}</ChatBubble>
+              </>
+            ))}
 
-          {currentStep && (
-            <>
-              {currentStep.prompt.slice(0, line).map((line, index) => (
-                <ChatBubble key={index} type={'received'}>
-                  {line}
-                </ChatBubble>
-              ))}
-            </>
-          )}
+            {currentStep && (
+              <>
+                {currentStep.prompt.slice(0, line).map((line, index) => (
+                  <ChatBubble key={index} type={'received'}>
+                    {line}
+                  </ChatBubble>
+                ))}
+              </>
+            )}
 
-          {currentStep && line < currentStep.prompt.length && <ChatTypingIndicator />}
-        </Chat>
+            {currentStep && line < currentStep.prompt.length && <ChatTypingIndicator />}
+          </Chat>
+        </div>
       </div>
 
       <form
-        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-700 dark:text-white md:rounded-bl-3xl md:rounded-br-3xl'
+        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white md:rounded-bl-3xl md:rounded-br-3xl'
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}
