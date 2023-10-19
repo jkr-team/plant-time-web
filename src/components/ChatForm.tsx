@@ -24,12 +24,6 @@ type ChatFormProps = {
   onSubmit: () => void;
 };
 
-export const ChatFormHeader = () => (
-  <div className='flex  w-full items-center bg-zinc-100 p-2 text-xl text-black dark:bg-zinc-700 dark:text-white md:rounded-tl-3xl md:rounded-tr-3xl'>
-    <span className='mx-auto p-1'>Plant Time</span>
-  </div>
-);
-
 export const ChatFormError = ({ error }: { error: string }) => (
   <div className='text-md absolute bottom-full left-0 w-full px-4 py-2 text-red-700 dark:text-red-400'>
     <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
@@ -141,11 +135,11 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   }, [line]);
 
   return (
-    <div className='flex h-full w-full flex-1 flex-col'>
-      <div className='relative w-full flex-1 overflow-y-auto basis-0 bg-white p-4 dark:bg-zinc-900 md:rounded-tl-3xl md:rounded-tr-3xl'>
+    <div className='flex w-full flex-1 flex-col'>
+      <div className='flex flex-col relative w-full flex-1 bg-white px-4 dark:bg-zinc-900'>
         <ChatFormBGImage />
 
-        <div className='relative z-10'>
+        <div className='w-full py-4 flex-1 overflow-y-auto basis-0 relative z-10'>
           <Chat>
             {completedSteps.map(({ step, value }, index) => (
               <>
@@ -175,7 +169,7 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
       </div>
 
       <form
-        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white md:rounded-bl-3xl md:rounded-br-3xl'
+        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white'
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}

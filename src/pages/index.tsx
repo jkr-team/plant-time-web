@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { User, UserContext } from '../contexts/user';
 import { ChatForm } from '../components/ChatForm';
 import { Spinner } from '../components/Spinner';
+import { PhoneContainer } from '../components/PhoneContainer';
 
 const FormCompletedScreen = () => (
-  <div className='animate-in slide-in-from-bottom absolute left-0 top-0 z-10 flex h-full w-full flex-col items-center justify-center gap-24 rounded-3xl bg-green-200 p-2 text-black duration-1000 ease-in-out dark:bg-zinc-900 dark:text-white'>
+  <div className='animate-in slide-in-from-bottom absolute left-0 top-0 z-10 flex h-full w-full flex-col items-center justify-center gap-24 rounded-3xl bg-white p-2 text-black duration-1000 ease-in-out dark:bg-zinc-900 dark:text-white'>
     <span className='text-center text-2xl'>Thank you! Please wait while we find you some recommendations. </span>
     <div className='text-9xl'>
       <Spinner />
@@ -31,7 +32,7 @@ export default function Home() {
       }}
     >
       <div className='flex flex-1 flex-col items-center justify-center md:p-14'>
-        <div className='relative flex w-full md:w-[568px] flex-1 flex-col overflow-hidden md:rounded-3xl shadow-lg'>
+        <PhoneContainer>
           <ChatForm
             steps={[
               {
@@ -58,7 +59,7 @@ export default function Home() {
           />
 
           {formCompleted && <FormCompletedScreen />}
-        </div>
+        </PhoneContainer>
       </div>
     </UserContext.Provider>
   );
