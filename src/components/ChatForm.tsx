@@ -141,8 +141,8 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
   }, [line]);
 
   return (
-    <div className='flex h-full w-full flex-1 flex-col md:w-[568px]'>
-      <div className=' relative w-full flex-1 bg-white p-4 dark:bg-zinc-900 md:rounded-tl-3xl md:rounded-tr-3xl'>
+    <div className='flex h-full w-full flex-1 flex-col'>
+      <div className='relative w-full flex-1 overflow-y-auto basis-0 bg-white p-4 dark:bg-zinc-900 md:rounded-tl-3xl md:rounded-tr-3xl'>
         <ChatFormBGImage />
 
         <div className='relative z-10'>

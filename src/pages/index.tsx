@@ -31,7 +31,7 @@ export default function Home() {
       }}
     >
       <div className='flex flex-1 flex-col items-center justify-center md:p-14'>
-        <div className='relative flex w-fit flex-1 flex-col overflow-hidden rounded-3xl shadow-lg'>
+        <div className='relative flex w-full md:w-[568px] flex-1 flex-col overflow-hidden md:rounded-3xl shadow-lg'>
           <ChatForm
             steps={[
               {
