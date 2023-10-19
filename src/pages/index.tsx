@@ -53,12 +53,11 @@ export default function Home() {
                 id: 'soil-ph-step',
                 prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
                 onSubmit: (value) => console.log(value),
-              },
+              }
             ]}
-            onSubmit={() => setFormCompleted(true)}
+            onSubmit={() => console.log('Submitted!')}
+            submittedMessage='Thank you! Please wait while we find you some recommendations.'
           />
-
-          {formCompleted && <FormCompletedScreen />}
         </PhoneContainer>
       </div>
     </UserContext.Provider>

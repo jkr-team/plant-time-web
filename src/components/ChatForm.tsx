@@ -22,6 +22,7 @@ type CompletedFormStep = {
 type ChatFormProps = {
   steps: FormStep[];
   onSubmit: () => void;
+  submittedMessage: string;
 };
 
 export const ChatFormError = ({ error }: { error: string }) => (
@@ -58,7 +59,7 @@ export const ChatFormBGImage = () => (
   </div>
 );
 
-export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
+export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) => {
   // The index of the current step
   const [step, setStep] = useState(0);
 
@@ -73,6 +74,9 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
 
   // A boolean indicating whether we are waiting for the async validation to complete
   const [isAsyncValidating, setIsAsyncValidating] = useState<boolean>(false);
+
+  // A boolean indicating whether we should show the submitted message
+  const [showSubmittedMessage, setShowSubmittedMessage] = useState<boolean>(false);
 
   const currentStep = steps[step];
 
@@ -106,11 +110,7 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
     currentStep.onSubmit(value);
     setCompletedSteps([...completedSteps, { step: currentStep, value }]);
 
-    // If we have run through all the steps, submit the form
-    if (step + 1 >= steps.length) {
-      onSubmit();
-    }
-
+    // Advance to the next step
     setStep(step + 1);
     setLine(0);
   };
@@ -127,6 +127,12 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
         if (currentStep && line < currentStep.prompt.length) {
           setLine(line + 1);
         }
+
+        // If we have reached the end of the form, show the submitted message and submit the form
+        if (completedSteps.length === steps.length) {
+          setShowSubmittedMessage(true);
+          onSubmit();
+        }
       },
       randomIntInRange(1000, 2000)
     );
@@ -136,10 +142,10 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
 
   return (
     <div className='flex w-full flex-1 flex-col'>
-      <div className='flex flex-col relative w-full flex-1 bg-white px-4 dark:bg-zinc-900'>
+      <div className='relative flex w-full flex-1 flex-col bg-white px-4 dark:bg-zinc-900'>
         <ChatFormBGImage />
 
-        <div className='w-full py-4 flex-1 overflow-y-auto basis-0 relative z-10'>
+        <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto py-4'>
           <Chat>
             {completedSteps.map(({ step, value }, index) => (
               <>
@@ -163,7 +169,10 @@ export const ChatForm = ({ steps, onSubmit }: ChatFormProps) => {
               </>
             )}
 
-            {currentStep && line < currentStep.prompt.length && <ChatTypingIndicator />}
+            {((!showSubmittedMessage && completedSteps.length === steps.length) ||
+              (currentStep && line < currentStep.prompt.length)) && <ChatTypingIndicator />}
+
+            {showSubmittedMessage && <ChatBubble type={'received'}>{submittedMessage}</ChatBubble>}
           </Chat>
         </div>
       </div>
