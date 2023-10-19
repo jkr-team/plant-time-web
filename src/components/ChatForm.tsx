@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { ChatBubble } from './ChatBubble';
 import { Chat } from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,13 +31,14 @@ export const ChatFormError = ({ error }: { error: string }) => (
   </div>
 );
 
-export const ChatFormInput = () => (
+export const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTMLInputElement> | undefined) => (
   <input
+    ref={ref}
     name='chat-form-input'
     className='relative flex flex-1 rounded-3xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
     autoFocus={true}
   />
-);
+));
 
 export const ChatFormSubmitButton = () => (
   <button
@@ -76,6 +77,7 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
   // A boolean indicating whether we should show the submitted message
   const [showSubmittedMessage, setShowSubmittedMessage] = useState<boolean>(false);
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const currentStep = steps[step];
 
   const onSubmitStep = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -109,6 +111,11 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
     // Advance to the next step
     setStep(step + 1);
     setLine(0);
+
+    // Clear the input
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
 
   useEffect(() => {
@@ -172,7 +179,7 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
         onSubmit={onSubmitStep}
       >
         {error && <ChatFormError error={error} />}
-        <ChatFormInput />
+        <ChatFormInput ref={inputRef} />
         <ChatFormSubmitButton />
       </form>
     </div>
