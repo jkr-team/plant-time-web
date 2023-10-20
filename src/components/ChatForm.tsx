@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { ChatBubble } from './ChatBubble';
-import { Chat } from './Chat';
+import ChatBubble from './ChatBubble';
+import Chat from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faLeaf, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { ChatTypingIndicator } from './ChatTypingIndicator';
+import ChatTypingIndicator from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
 
 export type FormStep = {
@@ -24,14 +24,16 @@ type ChatFormProps = {
   submittedMessage: string;
 };
 
-export const ChatFormError = ({ error }: { error: string }) => (
-  <div className='text-md absolute bottom-full left-0 w-full px-4 py-2 text-red-700 dark:text-red-400'>
-    <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
-    <span>{error}</span>
-  </div>
-);
+function ChatFormError({ error }: { error: string }) {
+  return (
+    <div className='text-md absolute bottom-full left-0 w-full px-4 py-2 text-red-700 dark:text-red-400'>
+      <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
+      <span>{error}</span>
+    </div>
+  );
+}
 
-export const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTMLInputElement> | undefined) => (
+const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTMLInputElement> | undefined) => (
   <input
     ref={ref}
     name='chat-form-input'
@@ -40,25 +42,30 @@ export const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTML
   />
 ));
 
-export const ChatFormSubmitButton = () => (
-  <button
-    className='w-12 cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md dark:border-white dark:border-opacity-30'
-    type='submit'
-  >
-    <FontAwesomeIcon icon={faPaperPlane} />
-  </button>
-);
+ChatFormInput.displayName = 'ChatFormInput';
 
-export const ChatFormBGImage = () => (
-  <div
-    className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-9xl text-green-600 opacity-10
+function ChatFormSubmitButton() {
+  return (
+    <button
+      className='w-12 cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md dark:border-white dark:border-opacity-30'
+      type='submit'
+    >
+      <FontAwesomeIcon icon={faPaperPlane} />
+    </button>
+  );
+}
+function ChatFormBGImage() {
+  return (
+    <div
+      className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-9xl text-green-600 opacity-10
    dark:text-zinc-500'
-  >
-    <FontAwesomeIcon icon={faLeaf} />
-  </div>
-);
+    >
+      <FontAwesomeIcon icon={faLeaf} />
+    </div>
+  );
+}
 
-export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) => {
+export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatFormProps) {
   // The index of the current step
   const [step, setStep] = useState(0);
 
@@ -184,4 +191,4 @@ export const ChatForm = ({ steps, onSubmit, submittedMessage }: ChatFormProps) =
       </form>
     </div>
   );
-};
+}

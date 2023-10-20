@@ -1,7 +1,7 @@
 import React from 'react';
-import { ChatBubble } from './ChatBubble';
+import ChatBubble from './ChatBubble';
 
-export const ChatTypingIndicator = () => {
+export default function ChatTypingIndicator() {
   return (
     <ChatBubble type={'received'}>
       <div className='flex select-none items-center gap-1'>
@@ -11,4 +11,4 @@ export const ChatTypingIndicator = () => {
       </div>
     </ChatBubble>
   );
-};
+}

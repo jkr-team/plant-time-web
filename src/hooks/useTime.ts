@@ -27,7 +27,7 @@ export const useTime = (updateRate: 'second' | 'minute' | 'hour' | number) => {
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), rate);
     return () => clearInterval(interval);
-  }, []);
+  }, [rate]);
 
   return time;
 };

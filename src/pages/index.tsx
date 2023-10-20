@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { User, UserContext } from '../contexts/user';
-import { ChatForm } from '../components/ChatForm';
-import { Spinner } from '../components/Spinner';
-import { PhoneContainer } from '../components/PhoneContainer';
+import ChatForm from '../components/ChatForm';
+import Spinner from '../components/Spinner';
+import PhoneContainer from '../components/PhoneContainer';
 
 const FormCompletedScreen = () => (
   <div className='absolute left-0 top-0 z-10 flex h-full w-full flex-col items-center justify-center gap-24 rounded-3xl bg-white p-2 text-black duration-1000 ease-in-out animate-in slide-in-from-bottom dark:bg-zinc-900 dark:text-white'>

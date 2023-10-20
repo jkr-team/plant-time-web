@@ -5,6 +5,7 @@ export function useFocusWithin<T extends HTMLElement>(): [RefObject<T>, boolean]
   const [isFocusedWithin, setIsFocusedWithin] = useState(false);
 
   useEffect(() => {
+    const element = ref.current;
     const onFocus = () => setIsFocusedWithin(true);
     const onBlur = (e: FocusEvent) => {
       if (!ref.current?.contains(e.relatedTarget as Node)) {
@@ -16,8 +17,8 @@ export function useFocusWithin<T extends HTMLElement>(): [RefObject<T>, boolean]
     ref.current?.addEventListener('focusout', onBlur);
 
     return () => {
-      ref.current?.removeEventListener('focusin', onFocus);
-      ref.current?.removeEventListener('focusout', onBlur);
+      element?.removeEventListener('focusin', onFocus);
+      element?.removeEventListener('focusout', onBlur);
     };
   }, []);
 

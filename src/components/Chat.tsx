@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
 import classNames from 'classnames';
-import { ChatBubble, TextBubbleProps } from './ChatBubble';
+import ChatBubble, { TextBubbleProps } from './ChatBubble';
 import { flattenReactFragments } from '../utils/flattenReactFragments';
-import { ChatTypingIndicator } from './ChatTypingIndicator';
+import ChatTypingIndicator from './ChatTypingIndicator';
 
 export interface ChatProps {
   children: React.ReactNode;
   key?: React.Key;
 }
 
-export const Chat = ({ key, children }: ChatProps) => {
+const Chat = ({ key, children }: ChatProps) => {
   const flattened = flattenReactFragments(children).filter(
     (child) => React.isValidElement(child) && (child.type === ChatBubble || child.type === ChatTypingIndicator)
   ) as ReactElement<TextBubbleProps>[];
@@ -30,3 +30,5 @@ export const Chat = ({ key, children }: ChatProps) => {
     </div>
   );
 };
+
+export default Chat;
