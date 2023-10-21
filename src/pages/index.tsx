@@ -61,7 +61,7 @@ export default function Home() {
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   return (
-    <div className='flex flex-1 flex-col items-center justify-center md:p-6'>
+    <main className='flex flex-1 flex-col items-center justify-center md:p-6'>
       <Container wide={showRecommendations}>
         {!showRecommendations && (
           <div
@@ -87,6 +87,6 @@ export default function Home() {
           </div>
         )}
       </Container>
-    </div>
+    </main>
   );
 }

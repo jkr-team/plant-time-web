@@ -6,7 +6,7 @@ export default function Document() {
   return (
     <Html lang='en'>
       <Head />
-      <body>
+      <body className='bg-sky-day text-black transition-colors duration-700 dark:bg-sky-night dark:text-white'>
         <Main />
         <NextScript />
         <Script strategy='beforeInteractive' src='/theme.js' />
