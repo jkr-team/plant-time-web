@@ -36,7 +36,7 @@ const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTMLInputEl
   <input
     ref={ref}
     name='chat-form-input'
-    className='relative flex flex-1 rounded-3xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
+    className='relative flex flex-1 rounded-2xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
     autoFocus={true}
   />
 ));
