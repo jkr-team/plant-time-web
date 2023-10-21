@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import ChatBubble from './ChatBubble';
 import Chat from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faLeaf, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
 
@@ -21,12 +21,11 @@ type CompletedFormStep = {
 type ChatFormProps = {
   steps: FormStep[];
   onSubmit: () => void;
-  submittedMessage: string;
 };
 
 function ChatFormError({ error }: { error: string }) {
   return (
-    <div className='text-md absolute bottom-full left-0 w-full px-4 py-2 text-red-700 dark:text-red-400'>
+    <div className='text-red-700 dark:text-red-400'>
       <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
       <span>{error}</span>
     </div>
@@ -65,7 +64,7 @@ function ChatFormBGImage() {
   );
 }
 
-export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatFormProps) {
+export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
   // The index of the current step
   const [step, setStep] = useState(0);
 
@@ -80,9 +79,6 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
 
   // A boolean indicating whether we are waiting for the async validation to complete
   const [isValidating, setIsValidating] = useState<boolean>(false);
-
-  // A boolean indicating whether we should show the submitted message
-  const [showSubmittedMessage, setShowSubmittedMessage] = useState<boolean>(false);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   const currentStep = steps[step];
@@ -101,6 +97,9 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
     // The user has submitted the step, but we need to wait for the onSubmit callback to validate their input before advancing to the next step
     setIsValidating(true);
 
+    // Clear the error message from the previous step (if there was one)
+    setError('');
+
     const submitError = await currentStep.onSubmit(value);
 
     // Validation is complete, so we can set the error message
@@ -113,7 +112,16 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
     }
 
     // Otherwise, add the completed step to the array of completed steps
-    setCompletedSteps([...completedSteps, { step: currentStep, value }]);
+    const newCompletedSteps = [...completedSteps, { step: currentStep, value }];
+    setCompletedSteps(newCompletedSteps);
+
+    // If we have reached the end of the form, call the onSubmit callback
+    if (newCompletedSteps.length === steps.length) {
+      onSubmit();
+      setStep(step + 1);
+      setLine(0);
+      return;
+    }
 
     // Advance to the next step
     setStep(step + 1);
@@ -131,12 +139,6 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
         if (currentStep && line < currentStep.prompt.length) {
           setLine(line + 1);
         }
-
-        // If we have reached the end of the form, show the submitted message and submit the form
-        if (completedSteps.length === steps.length) {
-          setShowSubmittedMessage(true);
-          onSubmit();
-        }
       },
       randomIntInRange(1000, 2000)
     );
@@ -146,7 +148,7 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
 
   return (
     <div className='flex w-full flex-1 flex-col'>
-      <div className='relative flex w-full flex-1 flex-col bg-white px-4 dark:bg-zinc-900'>
+      <div className='relative flex w-full flex-1 flex-col px-4'>
         <ChatFormBGImage />
 
         <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto py-4'>
@@ -173,10 +175,7 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
               </>
             )}
 
-            {((!showSubmittedMessage && completedSteps.length === steps.length) ||
-              (currentStep && line < currentStep.prompt.length)) && <ChatTypingIndicator />}
-
-            {showSubmittedMessage && <ChatBubble type={'received'}>{submittedMessage}</ChatBubble>}
+            {currentStep && line < currentStep.prompt.length && <ChatTypingIndicator />}
           </Chat>
         </div>
       </div>
@@ -185,7 +184,14 @@ export default function ChatForm({ steps, onSubmit, submittedMessage }: ChatForm
         className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white'
         onSubmit={onSubmitStep}
       >
-        {error && <ChatFormError error={error} />}
+        <div className='text-md absolute bottom-full left-0 flex w-full justify-between px-4 py-2 '>
+          {isValidating && (
+            <div className='animate-spin'>
+              <FontAwesomeIcon icon={faSpinner} />
+            </div>
+          )}
+          {error && <ChatFormError error={error} />}
+        </div>
         <ChatFormInput ref={inputRef} />
         <ChatFormSubmitButton />
       </form>
