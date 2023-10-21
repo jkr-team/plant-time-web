@@ -9,3 +9,7 @@ updateTheme();
 window.addEventListener('storage', () => {
   updateTheme();
 });
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  updateTheme();
+});
