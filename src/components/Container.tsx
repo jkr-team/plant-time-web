@@ -1,7 +1,6 @@
 import React from 'react';
 import DigitalClock from './DigitalClock';
 import classNames from 'classnames';
-import Logo from '../img/logo.svg';
 import ThemeSwitch from './ThemeSwitch';
 
 export default function Container({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
@@ -12,16 +11,10 @@ export default function Container({ children, wide = false }: { children: React.
         { 'md:max-w-[1440px]': wide, 'md:max-w-[568px]': !wide }
       )}
     >
-      <div className='z-20 grid grid-cols-3  bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
-        <div className='flex items-center justify-start text-black dark:text-white'>
-          <Logo className='h-[1em]' />
-        </div>
+      <div className='z-20 flex items-center justify-between  bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
+        <ThemeSwitch />
 
-        <div className='flex items-center justify-center'>
-          <ThemeSwitch />
-        </div>
-
-        <div className='flex items-center justify-end text-black dark:text-white'>
+        <div className='flex items-center gap-2 text-black dark:text-white'>
           <DigitalClock />
         </div>
       </div>
