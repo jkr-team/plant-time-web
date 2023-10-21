@@ -25,8 +25,20 @@ export const useTime = (updateRate: 'second' | 'minute' | 'hour' | number) => {
   }
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(new Date()), rate);
-    return () => clearInterval(interval);
+    const now = new Date();
+    const delay = rate - (now.getTime() % rate);
+    let interval: NodeJS.Timeout;
+
+    // The user may want to update the time every minute, but the current time could be something like 12:30:15. The delay should be 45 seconds, not 60. We only need to do this once, so for the first update we use a timeout instead of an interval.
+    const timeout = setTimeout(() => {
+      setTime(new Date());
+      interval = setInterval(() => setTime(new Date()), rate); // We are now in sync with the update rate, so we can use an interval.
+    }, delay);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
   }, [rate]);
 
   return time;
