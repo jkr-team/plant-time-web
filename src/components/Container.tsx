@@ -13,7 +13,7 @@ export default function Container({ children, wide = false }: { children: React.
       )}
     >
       <div className='z-20 grid grid-cols-3  bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
-        <div className='flex items-center justify-start'>
+        <div className='flex items-center justify-start text-black dark:text-white'>
           <Logo className='h-[1em]' />
         </div>
 
@@ -21,7 +21,7 @@ export default function Container({ children, wide = false }: { children: React.
           <ThemeSwitch />
         </div>
 
-        <div className='flex items-center justify-end'>
+        <div className='flex items-center justify-end text-black dark:text-white'>
           <DigitalClock />
         </div>
       </div>
