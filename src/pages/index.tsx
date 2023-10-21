@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
+import Logo from '../img/logo.svg';
 
 function delay(t: number, val: any) {
   return new Promise((resolve) => setTimeout(resolve, t, val));
@@ -79,6 +80,12 @@ export default function Home() {
             }}
           >
             <ChatForm steps={formSteps} onSubmit={() => setFormCompleted(true)} />
+          </div>
+        )}
+
+        {showRecommendations && (
+          <div className='flex flex-1 flex-col items-center justify-center'>
+            <Logo className="w-36 h-36" />
           </div>
         )}
       </Container>
