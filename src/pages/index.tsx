@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
-import Logo from '../img/logo.svg';
-
-function delay(t: number, val: any) {
-  return new Promise((resolve) => setTimeout(resolve, t, val));
-}
+import Spinner from '../img/spinner.svg';
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -84,8 +80,10 @@ export default function Home() {
         )}
 
         {showRecommendations && (
-          <div className='flex flex-1 flex-col items-center justify-center'>
-            <Logo className="w-36 h-36" />
+          <div className='flex flex-1 flex-col items-center justify-center gap-20 duration-700 animate-in fade-in'>
+            <Spinner className='w-36' />
+
+            <span className='text-center text-2xl'>Please wait while we find you some recommendations.</span>
           </div>
         )}
       </Container>

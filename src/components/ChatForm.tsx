@@ -3,6 +3,7 @@ import ChatBubble from './ChatBubble';
 import Chat from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Logo from '../img/logo.svg';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
 
@@ -56,10 +57,10 @@ function ChatFormSubmitButton() {
 function ChatFormBGImage() {
   return (
     <div
-      className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-9xl text-green-600 opacity-10
+      className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-green-600 opacity-10
    dark:text-zinc-500'
     >
-      <FontAwesomeIcon icon={faLeaf} />
+      <Logo className='w-48' />
     </div>
   );
 }
