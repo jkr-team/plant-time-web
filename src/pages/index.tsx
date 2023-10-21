@@ -18,7 +18,7 @@ export default function Home() {
       prompt: [
         'Welcome to Plant Time!',
         "We're here to help you decide what to plant in your garden.",
-        'To get started, please let us know your location',
+        'To get started, please let us know your location.',
         'You can enter your address or "current" to use your current location.',
         'We will not store any of your information.',
       ],
