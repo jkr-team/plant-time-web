@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { User, UserContext } from '../contexts/user';
 import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
@@ -13,7 +12,7 @@ export default function Home() {
     location: { lat: NaN, lng: NaN },
     soilType: '',
     soilPH: NaN,
-  } as User);
+  });
 
   const formSteps: FormStep[] = [
     {
@@ -65,7 +64,7 @@ export default function Home() {
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   return (
-    <div className='flex flex-1 flex-col items-center justify-center'>
+    <div className='flex flex-1 flex-col items-center justify-center md:p-6'>
       <Container wide={showRecommendations}>
         {!showRecommendations && (
           <div
