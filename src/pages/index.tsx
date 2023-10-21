@@ -3,6 +3,7 @@ import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
 import Spinner from '../img/spinner.svg';
+import { geocode, getLocation } from '../utils/geolocation';
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -16,15 +17,29 @@ export default function Home() {
       id: 'location-step',
       prompt: [
         'Welcome to Plant Time!',
-        "We're here to help you to decide what to plant in your garden.",
-        'To get started, please let us know your location (We will not store this information).',
+        "We're here to help you decide what to plant in your garden.",
+        'To get started, please let us know your location',
+        'You can enter your address or "current" to use your current location.',
+        'We will not store any of your information.',
       ],
       onSubmit: async (value) => {
-        console.log(value);
+        if (value == '') {
+          return 'Please enter a location.';
+        }
 
-        //await delay(4000, null);
+        try {
+          const latlng =
+            value.toLowerCase() == 'current'
+              ? await getLocation()
+              : /*await geocode(value)*/ { lat: 43.65107, lng: -79.347015 };
+          console.log(latlng);
+        } catch (e) {
+          if (e instanceof Error) return e?.message;
 
-        return value == 'balls' ? 'Invalid location.' : '';
+          return 'An unknown error occurred.';
+        }
+
+        return '';
       },
     },
     {
@@ -42,13 +57,29 @@ export default function Home() {
       },
     },
     {
-      id: 'soil-ph-step',
-      prompt: ['What is your soil pH?', 'You can find this out with a soil test kit.'],
+      id: 'width-step',
+      prompt: ['What is the width of your garden?', 'In centimeters.'],
       onSubmit: async (value) => {
         const parsedValue = parseFloat(value);
 
-        if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 14) {
-          return 'Soil pH must be a number between 0 and 14.';
+        if (isNaN(parsedValue) || parsedValue < 0) {
+          return 'Width must be a positive number.';
+        }
+
+        return '';
+      },
+    },
+    {
+      id: 'height-step',
+      prompt: [
+        'What is the maximum height you would prefer for your plants?',
+        'In centimeters or "none" if you have no preference.',
+      ],
+      onSubmit: async (value) => {
+        const parsedValue = parseFloat(value);
+
+        if (value !== 'none' && (isNaN(parsedValue) || parsedValue < 0)) {
+          return 'Height must be a positive number or none.';
         }
 
         return '';
