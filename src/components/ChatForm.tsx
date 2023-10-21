@@ -181,7 +181,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
       </div>
 
       <form
-        className='relative flex w-full gap-2 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white'
+        className='relative flex w-full gap-4 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white'
         onSubmit={onSubmitStep}
       >
         <div className='text-md absolute bottom-full left-0 flex w-full justify-between px-4 py-2 '>
