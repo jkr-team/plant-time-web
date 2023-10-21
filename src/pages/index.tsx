@@ -81,9 +81,9 @@ export default function Home() {
 
         {showRecommendations && (
           <div className='flex flex-1 flex-col items-center justify-center gap-20 duration-700 animate-in fade-in'>
-            <Spinner className='w-36' />
+            <Spinner className='w-36 text-green-600 dark:text-green-300' />
 
-            <span className='text-center text-2xl'>Please wait while we find you some recommendations.</span>
+            <span className='text-center text-3xl'>Loading recommendations...</span>
           </div>
         )}
       </Container>

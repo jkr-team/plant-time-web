@@ -47,7 +47,7 @@ ChatFormInput.displayName = 'ChatFormInput';
 function ChatFormSubmitButton() {
   return (
     <button
-      className='w-12 cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md dark:border-white dark:border-opacity-30'
+      className='w-12 flex justify-center items-center cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md text-green-800 dark:border-white dark:border-opacity-30 dark:text-green-300'
       type='submit'
     >
       <FontAwesomeIcon icon={faPaperPlane} />
