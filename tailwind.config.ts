@@ -33,9 +33,9 @@ const config: Config = {
       },
       transitionProperty: {
         'max-width': 'max-width',
-        'width': 'width',
-        'size': 'width, height',
-      }
+        width: 'width',
+        size: 'width, height',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
