@@ -17,7 +17,7 @@ export default function Home() {
       prompt: [
         'Welcome to Plant Time!',
         "We're here to help you to decide what to plant in your garden.",
-        'To get started, please let us know your location. (We will not store this information.)',
+        'To get started, please let us know your location (We will not store this information).',
       ],
       onSubmit: async (value) => {
         console.log(value);
