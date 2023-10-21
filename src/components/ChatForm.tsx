@@ -6,6 +6,7 @@ import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortaweso
 import Logo from '../img/logo.svg';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
+import { useScrollToBottom } from '../hooks/useScrollToBottom';
 
 export type FormStep = {
   id: string;
@@ -82,6 +83,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
   const [isValidating, setIsValidating] = useState<boolean>(false);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const scrollContainerRef = useScrollToBottom<HTMLDivElement>();
   const currentStep = steps[step];
 
   const onSubmitStep = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -152,7 +154,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
       <div className='relative flex w-full flex-1 flex-col px-4'>
         <ChatFormBGImage />
 
-        <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto py-4'>
+        <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto scrollbar-hide py-4' ref={scrollContainerRef}>
           <Chat>
             {completedSteps.map(({ step, value }, index) => (
               <>
