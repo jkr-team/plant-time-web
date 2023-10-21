@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: 'media',
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -31,6 +31,11 @@ const config: Config = {
       maxWidth: {
         container: '1400px',
       },
+      transitionProperty: {
+        'max-width': 'max-width',
+        'width': 'width',
+        'size': 'width, height',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],
