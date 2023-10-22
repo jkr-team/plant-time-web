@@ -156,7 +156,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
 
         <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto scrollbar-hide py-4' ref={scrollContainerRef}>
           <Chat>
-            {completedSteps.map(({ step, value }, index) => (
+            {completedSteps.map(({ step, value }) => (
               <React.Fragment key={`${step.id}`}>
                 {step.prompt.map((line, index) => (
                   <ChatBubble key={`${step.id} ${line} ${index}`} type={'received'}>
