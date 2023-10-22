@@ -157,21 +157,21 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
         <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto scrollbar-hide py-4' ref={scrollContainerRef}>
           <Chat>
             {completedSteps.map(({ step, value }, index) => (
-              <>
+              <React.Fragment key={`${step.id}`}>
                 {step.prompt.map((line, index) => (
-                  <ChatBubble key={index} type={'received'}>
+                  <ChatBubble key={`${step.id} ${line} ${index}`} type={'received'}>
                     {line}
                   </ChatBubble>
                 ))}
 
                 <ChatBubble type={'sent'}>{value}</ChatBubble>
-              </>
+              </React.Fragment>
             ))}
 
             {currentStep && (
               <>
                 {currentStep.prompt.slice(0, line).map((line, index) => (
-                  <ChatBubble key={index} type={'received'}>
+                  <ChatBubble key={`${currentStep.id} ${line} ${index}`} type={'received'}>
                     {line}
                   </ChatBubble>
                 ))}
