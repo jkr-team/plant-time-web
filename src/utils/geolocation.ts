@@ -5,13 +5,18 @@ export type LatLng = {
 
 export function getLocation() {
   return new Promise((resolve, reject) => {
-    if(!navigator.geolocation) {
+    if (!navigator.geolocation) {
       reject(new Error('Geolocation is not supported by your browser.'));
     }
 
-    navigator.geolocation.getCurrentPosition((location) => {
-      resolve({ lat: location.coords.latitude, lng: location.coords.longitude } as LatLng);
-    }, reject);
+    navigator.geolocation.getCurrentPosition(
+      (location) => {
+        resolve({ lat: location.coords.latitude, lng: location.coords.longitude } as LatLng);
+      },
+      (e) => {
+        reject(new Error(e.message));
+      }
+    );
   }) as Promise<LatLng>;
 }
 
