@@ -40,7 +40,7 @@ export default function ThemeSwitch() {
 
   return (
     <form
-      className='focus-within:b relative flex items-center justify-center gap-10 rounded-3xl md:gap-4 border-blue-600 text-gray-500 focus-within:border-2'
+      className='focus-within:b relative flex items-center justify-center gap-10 rounded-3xl border-blue-600 text-zinc-500 focus-within:border-2 md:gap-4'
       onChange={(e) => {
         const theme = (e.target as HTMLInputElement).value;
         setActiveRadio(theme);
@@ -55,7 +55,7 @@ export default function ThemeSwitch() {
         <input type='radio' name='theme' value='dark' className='appearance-none' />
         <FontAwesomeIcon icon={faMoon} />
       </label>
-      <label className={classNames(labelClasses, { 'text-blue-600': activeRadio === 'system' })}>
+      <label className={classNames(labelClasses, { 'text-zinc-800 dark:text-zinc-200': activeRadio === 'system' })}>
         <input type='radio' name='theme' value='system' className='appearance-none' />
         <FontAwesomeIcon icon={faGear} />
       </label>
