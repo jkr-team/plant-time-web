@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
-import Spinner from '../img/spinner.svg';
 import { geocode, getLocation } from '../utils/geolocation';
+import PlantsGrid from '../components/PlantsGrid';
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -58,7 +58,7 @@ export default function Home() {
     },
     {
       id: 'width-step',
-      prompt: ['What is the width of your garden?', 'In centimeters.'],
+      prompt: ['What is the width of your garden in centimeters?'],
       onSubmit: async (value) => {
         const parsedValue = parseFloat(value);
 
@@ -110,13 +110,7 @@ export default function Home() {
           </div>
         )}
 
-        {showRecommendations && (
-          <div className='flex flex-1 flex-col items-center justify-center gap-20 duration-700 animate-in fade-in'>
-            <Spinner className='w-36 text-green-600 dark:text-green-300' />
-
-            <span className='text-center text-3xl text-black dark:text-white'>Loading recommendations.</span>
-          </div>
-        )}
+        {showRecommendations && <PlantsGrid plants={[]} />}
       </Container>
     </main>
   );
