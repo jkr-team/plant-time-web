@@ -5,6 +5,19 @@ import classNames from 'classnames';
 import { geocode, getLocation } from '../utils/geolocation';
 import PlantsGrid from '../components/PlantsGrid';
 
+const testPlants = [
+  {
+    name: 'Janet Craig',
+    scientificName: 'Dracaena deremensis',
+    image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
+    season: 'Winter / Spring',
+    family: 'Liliaceae',
+    heightPotential: 366,
+    careInformation: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+  }
+];
+
+
 export default function Home() {
   const [user, setUser] = useState({
     location: { lat: NaN, lng: NaN },
@@ -110,7 +123,7 @@ export default function Home() {
           </div>
         )}
 
-        {showRecommendations && <PlantsGrid plants={[]} />}
+        {showRecommendations && <PlantsGrid plants={testPlants} />}
       </Container>
     </main>
   );
