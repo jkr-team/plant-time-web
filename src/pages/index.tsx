@@ -85,7 +85,7 @@ export default function Home() {
     },
     {
       id: 'attention-step',
-      prompt: ['Are you ok with a plant that requires a lot of attention?', 'Yes or no?'],
+      prompt: ['Are you ok with a plant that requires a lot of attention?', 'i.e one that needs to be pruned and/or watered often', 'Yes or no?'],
       onSubmit: async (value) => {
         switch (value.toLowerCase().trim()) {
           case 'yes':
