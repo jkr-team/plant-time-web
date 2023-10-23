@@ -14,9 +14,8 @@ const testPlants = [
     family: 'Liliaceae',
     heightPotential: 366,
     careInformation: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-  }
+  },
 ];
-
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -42,7 +41,7 @@ export default function Home() {
 
         try {
           const latlng =
-            value.toLowerCase() == 'current'
+            value.toLowerCase().trim() == 'current'
               ? await getLocation()
               : /*await geocode(value)*/ { lat: 43.65107, lng: -79.347015 };
           console.log(latlng);
@@ -56,27 +55,13 @@ export default function Home() {
       },
     },
     {
-      id: 'soil-type-step',
-      prompt: ['What type of soil do you have?', 'Sandy, loamy, or clay?'],
-      onSubmit: async (value) => {
-        switch (value.toLowerCase()) {
-          case 'sandy':
-          case 'loamy':
-          case 'clay':
-            return '';
-          default:
-            return 'Soil type must be sandy, loamy, or clay.';
-        }
-      },
-    },
-    {
-      id: 'width-step',
-      prompt: ['What is the width of your garden in centimeters?'],
+      id: 'pot-diameter-step',
+      prompt: ['What is the diameter of the pot you are using?', 'In centimeters.'],
       onSubmit: async (value) => {
         const parsedValue = parseFloat(value);
 
         if (isNaN(parsedValue) || parsedValue < 0) {
-          return 'Width must be a positive number.';
+          return 'Pot diameter must be a positive number.';
         }
 
         return '';
@@ -85,7 +70,7 @@ export default function Home() {
     {
       id: 'height-step',
       prompt: [
-        'What is the maximum height you would prefer for your plants?',
+        'What is the maximum potential growth height you would prefer for your plants?',
         'In centimeters or "none" if you have no preference.',
       ],
       onSubmit: async (value) => {
@@ -98,10 +83,22 @@ export default function Home() {
         return '';
       },
     },
+    {
+      id: 'attention-step',
+      prompt: ['Are you ok with a plant that requires alot of attention?', 'Yes or no.'],
+      onSubmit: async (value) => {
+        switch (value.toLowerCase().trim()) {
+          case 'yes':
+          case 'no':
+            return '';
+          default:
+            return 'Please enter yes or no.';
+        }
+      },
+    },
   ];
 
   const [formCompleted, setFormCompleted] = useState(false);
-  const wrapper = React.useRef<HTMLDivElement>(null);
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   return (
@@ -109,17 +106,14 @@ export default function Home() {
       <Container wide={showRecommendations}>
         {!showRecommendations && (
           <div
-            ref={wrapper}
             className={classNames('flex w-full flex-1 flex-col', {
               'delay-700 duration-700 animate-out fade-out fill-mode-forwards': formCompleted,
             })}
-            onAnimationEnd={(e) => {
-              if (e.target == wrapper.current) {
-                setShowRecommendations(true);
-              }
-            }}
+            onAnimationEnd={(e) => setShowRecommendations(true)}
           >
-            <ChatForm steps={formSteps} onSubmit={() => setFormCompleted(true)} />
+            <div className='contents' onAnimationEnd={(e) => e.stopPropagation()}>
+              <ChatForm steps={formSteps} onSubmit={() => setFormCompleted(true)} />
+            </div>
           </div>
         )}
 
