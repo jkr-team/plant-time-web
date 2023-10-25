@@ -9,7 +9,7 @@ export default function PlantsGrid({ plants }: { plants: Plant[] }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timeout);
   });
