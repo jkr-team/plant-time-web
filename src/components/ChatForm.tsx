@@ -48,7 +48,7 @@ ChatFormInput.displayName = 'ChatFormInput';
 function ChatFormSubmitButton() {
   return (
     <button
-      className='w-12 flex justify-center items-center cursor-pointer rounded-full border-2 border-black border-opacity-10 shadow-md text-green-800 dark:border-white dark:border-opacity-30 dark:text-green-300'
+      className='flex w-12 cursor-pointer items-center justify-center rounded-full border-2 border-black border-opacity-10 text-green-800 shadow-md dark:border-white dark:border-opacity-30 dark:text-green-300'
       type='submit'
     >
       <FontAwesomeIcon icon={faPaperPlane} />
@@ -154,7 +154,10 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
       <div className='relative flex w-full flex-1 flex-col px-4'>
         <ChatFormBGImage />
 
-        <div className='relative z-10 w-full flex-1 basis-0 overflow-y-auto scrollbar-hide py-4' ref={scrollContainerRef}>
+        <div
+          className='relative z-10 w-full flex-1 basis-0 overflow-y-auto py-4 scrollbar-hide'
+          ref={scrollContainerRef}
+        >
           <Chat>
             {completedSteps.map(({ step, value }) => (
               <React.Fragment key={`${step.id}`}>

@@ -6,7 +6,7 @@ export default function LoadingMessage({ message }: { message: string }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEllipsis((prev) => ((prev + 1) % 4));
+      setEllipsis((prev) => (prev + 1) % 4);
     }, 300);
 
     return () => clearInterval(interval);

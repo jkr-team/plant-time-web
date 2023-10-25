@@ -28,7 +28,7 @@ export default function PlantCard({ plant }: { plant: Plant }) {
         })}
       >
         <div className='backface-hidden flex h-fit w-full flex-col overflow-hidden rounded-lg border-4 border-green-700 bg-white p-4 shadow-lg transition-[box-shadow] duration-500 hover:shadow-xl dark:border-green-100 dark:bg-black'>
-          <div className='flex w-full flex-col gap-1 dark:bg-green-100 bg-green-700 text-white dark:text-black p-4 text-center'>
+          <div className='flex w-full flex-col gap-1 bg-green-700 p-4 text-center text-white dark:bg-green-100 dark:text-black'>
             <span className='text-2xl font-bold'>{plant.name}</span>
             <span className='text-lg'>{plant.scientificName}</span>
           </div>
@@ -37,7 +37,7 @@ export default function PlantCard({ plant }: { plant: Plant }) {
         </div>
 
         <div className='backface-hidden absolute left-0 top-0 flex h-full w-full flex-col overflow-auto rounded-lg border-4 border-green-700 bg-white p-4 text-black shadow-lg transition-[box-shadow] duration-500 [transform:rotateY(180deg)] hover:shadow-xl dark:border-green-100 dark:bg-zinc-800 dark:text-white'>
-          <div className='flex w-full flex-col gap-2 p-4 relative min-h-full'>
+          <div className='relative flex min-h-full w-full flex-col gap-2 p-4'>
             <div>
               <span className={'font-bold'}>Blooming Season:</span> {plant.season}
             </div>
@@ -50,7 +50,9 @@ export default function PlantCard({ plant }: { plant: Plant }) {
             <div>
               <span className={'font-bold'}>Care Information:</span> {plant.careInformation}
             </div>
-            <div className='flex justify-center items-end w-full text-center flex-1 text-sm text-green-700 dark:text-green-100'>{plant.name}</div>
+            <div className='flex w-full flex-1 items-end justify-center text-center text-sm text-green-700 dark:text-green-100'>
+              {plant.name}
+            </div>
           </div>
         </div>
       </div>

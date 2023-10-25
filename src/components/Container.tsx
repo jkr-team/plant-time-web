@@ -7,7 +7,7 @@ export default function Container({ children, wide = false }: { children: React.
   return (
     <div
       className={classNames(
-        'transition-max-width relative flex w-full flex-1 flex-col overflow-hidden shadow-2xl duration-700 dark:shadow-xl md:max-h-[1200px] md:rounded-3xl',
+        'relative flex w-full flex-1 flex-col overflow-hidden shadow-2xl transition-max-width duration-700 dark:shadow-xl md:max-h-[1200px] md:rounded-3xl',
         { 'md:max-w-[1440px]': wide, 'md:max-w-[568px]': !wide }
       )}
     >
