@@ -28,7 +28,7 @@ export default function PlantCard({ plant }: { plant: Plant }) {
         })}
       >
         <div className='backface-hidden flex h-fit w-full flex-col overflow-hidden rounded-lg border-4 border-green-700 bg-white p-4 shadow-lg transition-[box-shadow] duration-500 hover:shadow-xl dark:border-green-200 dark:bg-black'>
-          <div className='flex w-full flex-col gap-1 bg-green-100 p-4 text-center text-black'>
+          <div className='flex w-full flex-col gap-1 dark:bg-green-100 bg-green-700 text-white dark:text-black p-4 text-center'>
             <span className='text-2xl font-bold'>{plant.name}</span>
             <span className='text-lg'>{plant.scientificName}</span>
           </div>
