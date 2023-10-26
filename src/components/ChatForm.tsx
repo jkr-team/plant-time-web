@@ -143,7 +143,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
           setLine(line + 1);
         }
       },
-      randomIntInRange(1000, 2000)
+      randomIntInRange(800, 1500)
     );
 
     return () => clearTimeout(timeout);
