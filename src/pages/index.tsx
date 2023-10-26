@@ -147,6 +147,26 @@ export default function Home() {
                   careInformation:
                     'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
                 },
+                {
+                  name: 'Lady palm',
+                  scientificName: 'Rhapis excelsa',
+                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5725.jpg',
+                  season: 'All year',
+                  family: 'Arecaceae',
+                  heightPotential: 366,
+                  careInformation:
+                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+                },
+                {
+                  name: 'Tailflower',
+                  scientificName: 'Dracaena deremensis',
+                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5491.jpg',
+                  season: 'All year',
+                  family: 'Araceae',
+                  heightPotential: 61,
+                  careInformation:
+                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+                },
               ]}
             />
           </div>
