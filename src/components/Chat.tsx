@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import ChatBubble, { TextBubbleProps } from './ChatBubble';
 import { flattenReactFragments } from '../utils/flattenReactFragments';
@@ -12,7 +12,7 @@ export interface ChatProps {
 const Chat = ({ key, children }: ChatProps) => {
   const flattened = flattenReactFragments(children).filter(
     (child) => React.isValidElement(child) && (child.type === ChatBubble || child.type === ChatTypingIndicator)
-  ) as ReactElement<TextBubbleProps>[];
+  ) as React.ReactElement<TextBubbleProps>[];
 
   return (
     <div className='flex h-full w-full flex-col overflow-y-auto'>
