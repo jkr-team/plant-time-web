@@ -124,6 +124,7 @@ export default function Home() {
               'delay-700 duration-700 animate-out fade-out fill-mode-forwards': formCompleted,
             })}
             onAnimationEnd={(e) => setShowRecommendations(true)}
+            inert={showAbout ? "" : undefined}
           >
             <div className='contents' onAnimationEnd={(e) => e.stopPropagation()}>
               <ChatForm steps={formSteps} onSubmit={() => setFormCompleted(true)} />
@@ -133,20 +134,22 @@ export default function Home() {
 
         {/* Recommended plants will appear in this grid */}
         {showRecommendations && (
-          <PlantsGrid
-            plants={[
-              {
-                name: 'Janet Craig',
-                scientificName: 'Dracaena deremensis',
-                image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
-                season: 'Winter / Spring',
-                family: 'Liliaceae',
-                heightPotential: 366,
-                careInformation:
-                  'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-              },
-            ]}
-          />
+          <div className='contents' inert={showAbout ? "" : undefined}>
+            <PlantsGrid
+              plants={[
+                {
+                  name: 'Janet Craig',
+                  scientificName: 'Dracaena deremensis',
+                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
+                  season: 'Winter / Spring',
+                  family: 'Liliaceae',
+                  heightPotential: 366,
+                  careInformation:
+                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+                },
+              ]}
+            />
+          </div>
         )}
 
         {/* About "page" */}
