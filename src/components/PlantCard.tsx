@@ -17,10 +17,17 @@ export default function PlantCard({ plant }: { plant: Plant }) {
 
   return (
     <div
-      className='h-fit w-72 cursor-pointer transition-transform duration-500 animate-in fade-in [perspective:1000px] hover:scale-105'
+      className='h-fit w-72 cursor-pointer transition-transform duration-500 animate-in fade-in [perspective:1000px] hover:scale-105 focus:outline-none'
       onClick={() => {
         setFlipped(!flipped);
       }}
+      onKeyUp={(e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          setFlipped(!flipped);
+        }
+      }}
+      role='button'
+      tabIndex={0}
     >
       <div
         className={classNames('preserve-3d relative h-fit w-full transition-transform duration-700', {
