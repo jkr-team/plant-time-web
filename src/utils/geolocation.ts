@@ -20,6 +20,29 @@ export function getLocation() {
   }) as Promise<LatLng>;
 }
 
+export function distance(a: LatLng, b: LatLng) {
+  // Convert degrees to radians
+  const aLat = (a.lat * Math.PI) / 180;
+  const aLng = (a.lng * Math.PI) / 180;
+  const bLat = (b.lat * Math.PI) / 180;
+  const bLng = (b.lng * Math.PI) / 180;
+
+  // Approximate radius of earth in kilometers
+  const r = 6371;
+
+  // Use the Haversine formula to calculate distance
+  return (
+    r *
+    2 *
+    Math.asin(
+      Math.sqrt(
+        Math.pow(Math.sin((bLat - aLat) / 2), 2) +
+          Math.cos(aLat) * Math.cos(bLat) * Math.pow(Math.sin((bLng - aLng) / 2), 2)
+      )
+    )
+  );
+}
+
 export async function geocode(value: string) {
   const response = await fetch(
     `https://api.geoapify.com/v1/geocode/search?text=${value}&apiKey=40a2a0f8179d4048aec0e331f986271d`
