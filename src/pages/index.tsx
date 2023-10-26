@@ -155,7 +155,7 @@ export default function Home() {
         {/* About "page" */}
         <div
           className={classNames(
-            'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center justify-center bg-inherit text-black dark:text-white',
+            'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center px-4 pb-4 pt-12 bg-inherit text-black dark:text-white',
             { 'duration-700 animate-in slide-in-from-bottom': showAbout },
             { 'duration-700 animate-out slide-out-to-bottom': !showAbout }
           )}
