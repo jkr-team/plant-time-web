@@ -2,8 +2,18 @@ import React from 'react';
 import DigitalClock from './DigitalClock';
 import classNames from 'classnames';
 import ThemeSwitch from './ThemeSwitch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
-export default function Container({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
+export default function Container({
+  top,
+  children,
+  wide = false,
+}: {
+  top: React.ReactNode;
+  children: React.ReactNode;
+  wide?: boolean;
+}) {
   return (
     <div
       className={classNames(
@@ -11,14 +21,8 @@ export default function Container({ children, wide = false }: { children: React.
         { 'md:max-w-[1440px]': wide, 'md:max-w-[568px]': !wide }
       )}
     >
-      <div className='z-20 flex items-center justify-between  bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
-        <ThemeSwitch />
-
-        <div className='flex items-center gap-2 text-black dark:text-white'>
-          <DigitalClock />
-        </div>
-      </div>
-      <div className='flex w-full flex-1 flex-col bg-white dark:bg-zinc-900'>{children}</div>
+      <div className='z-20 flex items-center bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>{top}</div>
+      <div className='relative flex w-full flex-1 flex-col bg-white dark:bg-zinc-900'>{children}</div>
     </div>
   );
 }

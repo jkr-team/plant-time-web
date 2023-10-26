@@ -4,18 +4,11 @@ import Container from '../components/Container';
 import classNames from 'classnames';
 import { geocode, getLocation } from '../utils/geolocation';
 import PlantsGrid from '../components/PlantsGrid';
-
-const testPlants = [
-  {
-    name: 'Janet Craig',
-    scientificName: 'Dracaena deremensis',
-    image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
-    season: 'Winter / Spring',
-    family: 'Liliaceae',
-    heightPotential: 366,
-    careInformation: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-  },
-];
+import ThemeSwitch from '../components/ThemeSwitch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import DigitalClock from '../components/DigitalClock';
+import About from '../components/About';
 
 export default function Home() {
   const [user, setUser] = useState({
@@ -30,8 +23,8 @@ export default function Home() {
       prompt: [
         'Welcome to Plant Time!',
         "We're here to help you decide what to plant in your garden.",
-        'To get started, please let us know your location.',
-        'You can enter your address or "current" to use your current location.',
+        'To get started, please let us know your general location.',
+        'You can enter "current" to use your current location.',
         'We will not store any of your information.',
       ],
       onSubmit: async (value) => {
@@ -104,10 +97,27 @@ export default function Home() {
 
   const [formCompleted, setFormCompleted] = useState(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
 
   return (
     <main className='flex flex-1 flex-col items-center justify-center md:p-6'>
-      <Container wide={showRecommendations}>
+      <Container
+        top={
+          <>
+            <ThemeSwitch />
+
+            <button className='ml-auto mr-2 text-zinc-500' onClick={() => setShowAbout(!showAbout)}>
+              <FontAwesomeIcon icon={faCircleQuestion} />
+            </button>
+
+            <div className='flex items-center gap-2 text-black dark:text-white'>
+              <DigitalClock />
+            </div>
+          </>
+        }
+        wide={showRecommendations}
+      >
+        {/* Chat Form where user enters input */}
         {!showRecommendations && (
           <div
             className={classNames('flex w-full flex-1 flex-col', {
@@ -121,7 +131,36 @@ export default function Home() {
           </div>
         )}
 
-        {showRecommendations && <PlantsGrid plants={testPlants} />}
+        {/* Recommended plants will appear in this grid */}
+        {showRecommendations && (
+          <PlantsGrid
+            plants={[
+              {
+                name: 'Janet Craig',
+                scientificName: 'Dracaena deremensis',
+                image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
+                season: 'Winter / Spring',
+                family: 'Liliaceae',
+                heightPotential: 366,
+                careInformation:
+                  'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+              },
+            ]}
+          />
+        )}
+
+        {/* About "page" */}
+        <div
+          className={classNames(
+            'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center justify-center bg-inherit text-black dark:text-white',
+            { 'duration-700 animate-in slide-in-from-bottom': showAbout },
+            { 'duration-700 animate-out slide-out-to-bottom': !showAbout }
+          )}
+          onAnimationStart={(e) => showAbout && (e.target as HTMLElement).classList.remove('invisible')}
+          onAnimationEnd={(e) => !showAbout && (e.target as HTMLElement).classList.add('invisible')}
+        >
+          <About />
+        </div>
       </Container>
     </main>
   );
