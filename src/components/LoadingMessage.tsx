@@ -13,7 +13,7 @@ export default function LoadingMessage({ message }: { message: string }) {
   }, []);
 
   return (
-    <div className='flex flex-1 flex-col items-center justify-center gap-20 duration-700 animate-in fade-in'>
+    <div className='flex flex-col items-center justify-center gap-20 duration-700 animate-in fade-in'>
       <Spinner className='w-36 text-green-600 dark:text-green-300' />
 
       <div className='flex'>
