@@ -187,8 +187,8 @@ export default function Home() {
         <div
           className={classNames(
             'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center bg-inherit px-4 pb-4 pt-12 text-black dark:text-white',
-            { 'duration-700 animate-in slide-in-from-bottom': showAbout },
-            { 'duration-700 animate-out slide-out-to-bottom': !showAbout }
+            { 'duration-700 animate-in fade-in motion-safe:slide-in-from-bottom': showAbout },
+            { 'duration-700 animate-out fade-out motion-safe:slide-out-to-bottom': !showAbout }
           )}
           onAnimationStart={(e) => showAbout && (e.target as HTMLElement).classList.remove('invisible')}
           onAnimationEnd={(e) => !showAbout && (e.target as HTMLElement).classList.add('invisible')}
