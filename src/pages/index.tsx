@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatForm, { FormStep } from '../components/ChatForm';
 import Container from '../components/Container';
 import classNames from 'classnames';
-import { geocode, getLocation } from '../utils/geolocation';
+import { City, geocode, getClosestCity, getLocation } from '../utils/geolocation';
 import PlantsGrid from '../components/PlantsGrid';
 import ThemeSwitch from '../components/ThemeSwitch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import DigitalClock from '../components/DigitalClock';
 import About from '../components/About';
+import { Plant } from '../components/PlantCard';
 
 export default function Home() {
-  const [user, setUser] = useState({
-    location: { lat: NaN, lng: NaN },
-    soilType: '',
-    soilPH: NaN,
-  });
+  const [preferences, setPreferences] = useState<{
+    city?: City;
+    potDiameter?: number;
+    height?: string;
+    attention?: string;
+  }>({});
+
+  const [plants, setPlants] = useState([] as Plant[]);
 
   const formSteps: FormStep[] = [
     {
@@ -33,14 +37,14 @@ export default function Home() {
         }
 
         try {
-          const latlng =
-            value.toLowerCase().trim() == 'current'
-              ? await getLocation()
-              : /*await geocode(value)*/ { lat: 43.65107, lng: -79.347015 };
-          console.log(latlng);
+          const input = value.toLowerCase().trim();
+          /*await geocode(value)*/
+          const latlng = input == 'current' ? await getLocation() : { lat: 43.65107, lng: -79.347015 };
+          const city = getClosestCity(latlng);
+
+          setPreferences({ ...preferences, city });
         } catch (e) {
           if (e instanceof Error) return e?.message;
-
           return 'An unknown error occurred.';
         }
 
@@ -57,40 +61,42 @@ export default function Home() {
           return 'Pot diameter must be a positive number.';
         }
 
+        setPreferences({ ...preferences, potDiameter: parsedValue });
         return '';
       },
     },
     {
       id: 'height-step',
-      prompt: [
-        'What is the maximum potential growth height you would prefer for your plants?',
-        'In centimeters or "none" if you have no preference.',
-      ],
+      prompt: ['How tall would you like your plants to be?', 'Short, medium, or tall?'],
       onSubmit: async (value) => {
-        const parsedValue = parseFloat(value);
+        const input = value.toLowerCase().trim();
+        const options = ['short', 'medium', 'tall'];
 
-        if (value !== 'none' && (isNaN(parsedValue) || parsedValue < 0)) {
-          return 'Height must be a positive number or none.';
+        if (options.includes(input)) {
+          setPreferences({ ...preferences, height: input });
+          return '';
         }
 
-        return '';
+        return `Please enter one of the following: ${options.join(', ')}.`;
       },
     },
     {
       id: 'attention-step',
       prompt: [
-        'Are you ok with a plant that requires a lot of attention?',
-        'i.e one that needs to be pruned and/or watered often.',
-        'Yes or no?',
+        'How much effort are you willing to put into the care of the plant?',
+        'i.e watering, fertilizing, pruning, etc.',
+        'Little, medium, or lots?',
       ],
       onSubmit: async (value) => {
-        switch (value.toLowerCase().trim()) {
-          case 'yes':
-          case 'no':
-            return '';
-          default:
-            return 'Please enter yes or no.';
+        const input = value.toLowerCase().trim();
+        const options = ['little', 'moderate', 'lots'];
+
+        if (options.includes(input)) {
+          setPreferences({ ...preferences, attention: input });
+          return '';
         }
+
+        return `Please enter one of the following: ${options.join(', ')}.`;
       },
     },
   ];
@@ -99,6 +105,44 @@ export default function Home() {
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
 
+  useEffect(() => {
+    // Check if the form hasn't been completed or if we already have recommendations before making the API call
+    if (!formCompleted || plants.length > 0) return;
+
+    // TODO: Make this a real API call
+    console.log(preferences);
+
+    setPlants([
+      {
+        name: 'Janet Craig',
+        latinName: 'Dracaena deremensis',
+        image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
+        color: 'green',
+        family: 'Liliaceae',
+        height: 366,
+        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+      },
+      {
+        name: 'Lady palm',
+        latinName: 'Rhapis excelsa',
+        image: 'http://www.tropicopia.com/house-plant/thumbnails/5725.jpg',
+        color: 'pink',
+        family: 'Arecaceae',
+        height: 366,
+        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+      },
+      {
+        name: 'Tailflower',
+        latinName: 'Dracaena deremensis',
+        image: 'http://www.tropicopia.com/house-plant/thumbnails/5491.jpg',
+        color: 'lilac',
+        family: 'Araceae',
+        height: 61,
+        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
+      },
+    ]);
+  }, [formCompleted]);
+
   return (
     <main className='flex flex-1 flex-col items-center justify-center md:p-6'>
       <Container
@@ -106,7 +150,7 @@ export default function Home() {
           <>
             <ThemeSwitch />
 
-            <button className='ml-auto mr-2 text-zinc-500' onClick={() => setShowAbout(!showAbout)}>
+            <button className='ml-auto mr-2 flex text-zinc-500' onClick={() => setShowAbout(!showAbout)}>
               <FontAwesomeIcon icon={faCircleQuestion} />
             </button>
 
@@ -124,7 +168,7 @@ export default function Home() {
               'delay-700 duration-700 animate-out fade-out fill-mode-forwards': formCompleted,
             })}
             onAnimationEnd={(e) => setShowRecommendations(true)}
-            inert={showAbout ? "" : undefined}
+            inert={showAbout ? '' : undefined}
           >
             <div className='contents' onAnimationEnd={(e) => e.stopPropagation()}>
               <ChatForm steps={formSteps} onSubmit={() => setFormCompleted(true)} />
@@ -134,48 +178,15 @@ export default function Home() {
 
         {/* Recommended plants will appear in this grid */}
         {showRecommendations && (
-          <div className='contents' inert={showAbout ? "" : undefined}>
-            <PlantsGrid
-              plants={[
-                {
-                  name: 'Janet Craig',
-                  scientificName: 'Dracaena deremensis',
-                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
-                  season: 'Winter / Spring',
-                  family: 'Liliaceae',
-                  heightPotential: 366,
-                  careInformation:
-                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-                },
-                {
-                  name: 'Lady palm',
-                  scientificName: 'Rhapis excelsa',
-                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5725.jpg',
-                  season: 'All year',
-                  family: 'Arecaceae',
-                  heightPotential: 366,
-                  careInformation:
-                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-                },
-                {
-                  name: 'Tailflower',
-                  scientificName: 'Dracaena deremensis',
-                  image: 'http://www.tropicopia.com/house-plant/thumbnails/5491.jpg',
-                  season: 'All year',
-                  family: 'Araceae',
-                  heightPotential: 61,
-                  careInformation:
-                    'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-                },
-              ]}
-            />
+          <div className='contents' inert={showAbout ? '' : undefined}>
+            <PlantsGrid plants={plants} />
           </div>
         )}
 
         {/* About "page" */}
         <div
           className={classNames(
-            'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center px-4 pb-4 pt-12 bg-inherit text-black dark:text-white',
+            'invisible absolute z-10 flex h-full w-full flex-1 flex-col items-center bg-inherit px-4 pb-4 pt-12 text-black dark:text-white',
             { 'duration-700 animate-in slide-in-from-bottom': showAbout },
             { 'duration-700 animate-out slide-out-to-bottom': !showAbout }
           )}
