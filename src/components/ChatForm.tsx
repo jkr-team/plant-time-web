@@ -27,7 +27,7 @@ type ChatFormProps = {
 
 function ChatFormError({ error }: { error: string }) {
   return (
-    <div className='text-red-700 dark:text-red-400'>
+    <div className='text-red-700 dark:text-red-400 w-full p-1'>
       <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
       <span>{error}</span>
     </div>
@@ -186,6 +186,8 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
         </div>
       </div>
 
+      {error && <ChatFormError error={error} />}
+
       <form
         className='relative flex w-full gap-4 bg-zinc-100 p-4 align-middle text-black shadow-md dark:bg-zinc-800 dark:text-white'
         onSubmit={onSubmitStep}
@@ -196,7 +198,6 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
               <FontAwesomeIcon icon={faSpinner} />
             </div>
           )}
-          {error && <ChatFormError error={error} />}
         </div>
         <ChatFormInput ref={inputRef} />
         <ChatFormSubmitButton />
