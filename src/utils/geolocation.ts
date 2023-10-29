@@ -3,6 +3,11 @@ export type LatLng = {
   lng: number;
 };
 
+export type City = {
+  name: string;
+  coords: LatLng;
+};
+
 export function getLocation() {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
@@ -20,7 +25,7 @@ export function getLocation() {
   }) as Promise<LatLng>;
 }
 
-export function distance(a: LatLng, b: LatLng) {
+export function haversineDistance(a: LatLng, b: LatLng) {
   // Convert degrees to radians
   const aLat = (a.lat * Math.PI) / 180;
   const aLng = (a.lng * Math.PI) / 180;
@@ -41,6 +46,19 @@ export function distance(a: LatLng, b: LatLng) {
       )
     )
   );
+}
+
+const defaultCities: City[] = [
+  { name: 'Toronto', coords: { lat: 43.6532, lng: -79.3832 } },
+  { name: 'Vancouver', coords: { lat: 49.2827, lng: -123.1207 } },
+  { name: 'Calgary', coords: { lat: 51.0447, lng: -114.0719 } },
+  { name: 'Edmonton', coords: { lat: 53.5461, lng: -113.4938 } },
+  { name: 'Ottawa', coords: { lat: 45.4215, lng: -75.6972 } },
+  { name: 'Kitchener', coords: { lat: 43.4509, lng: -80.4925 } },
+];
+
+export function getClosestCity(coords: LatLng, cities: City[] = defaultCities) {
+  return cities.map((city) => haversineDistance(coords, city.coords)).reduce((a, b) => (a < b ? a : b));
 }
 
 export async function geocode(value: string) {
