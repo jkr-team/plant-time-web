@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTime } from '../hooks/useTime';
+import { useTime } from '../utils/useTime';
 
 export default function DigitalClock() {
   const time = useTime('minute');

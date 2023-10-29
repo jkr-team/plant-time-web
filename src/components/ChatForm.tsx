@@ -6,7 +6,7 @@ import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortaweso
 import Logo from '../img/logo.svg';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import { randomIntInRange } from '../utils/random';
-import { useScrollToBottom } from '../hooks/useScrollToBottom';
+import { useScrollToBottom } from '../utils/useScrollToBottom';
 
 export type FormStep = {
   id: string;
