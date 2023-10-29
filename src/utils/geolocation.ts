@@ -57,8 +57,20 @@ const defaultCities: City[] = [
   { name: 'Kitchener', coords: { lat: 43.4509, lng: -80.4925 } },
 ];
 
-export function getClosestCity(coords: LatLng, cities: City[] = defaultCities) {
-  return cities.map((city) => haversineDistance(coords, city.coords)).reduce((a, b) => (a < b ? a : b));
+export function getClosestCity(coords: LatLng, cities: City[] = defaultCities): City {
+  let closestCity: City = cities[0];
+  let closestDistance: number = Infinity;
+
+  for (const city of cities) {
+    const distance = haversineDistance(coords, city.coords);
+
+    if (distance < closestDistance) {
+      closestCity = city;
+      closestDistance = distance;
+    }
+  }
+
+  return closestCity;
 }
 
 export async function geocode(value: string) {
