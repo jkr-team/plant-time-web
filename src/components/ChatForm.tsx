@@ -27,21 +27,24 @@ type ChatFormProps = {
 
 function ChatFormError({ error }: { error: string }) {
   return (
-    <div className='text-red-700 dark:text-red-400 w-full p-1'>
+    <div className='w-full p-1 text-red-700 dark:text-red-400'>
       <FontAwesomeIcon icon={faCircleExclamation} className='mr-2' />
       <span>{error}</span>
     </div>
   );
 }
 
-const ChatFormInput = React.forwardRef((_: any, ref: React.LegacyRef<HTMLInputElement> | undefined) => (
-  <input
-    ref={ref}
-    name='chat-form-input'
-    className='relative flex flex-1 rounded-2xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md dark:border-white dark:border-opacity-30'
-    autoFocus={true}
-  />
-));
+const ChatFormInput = React.forwardRef(
+  (props: React.HTMLProps<HTMLInputElement>, ref: React.LegacyRef<HTMLInputElement> | undefined) => (
+    <input
+      {...props}
+      ref={ref}
+      name='chat-form-input'
+      className='relative flex flex-1 rounded-2xl border-2 border-black border-opacity-10 bg-transparent px-4 py-2 text-xl shadow-md invalid:border-red-700 focus:outline-none dark:border-white dark:border-opacity-30'
+      autoFocus={true}
+    />
+  )
+);
 
 ChatFormInput.displayName = 'ChatFormInput';
 
@@ -107,6 +110,13 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
 
     // Validation is complete, so we can set the error message
     setError(submitError);
+
+    // Set the error message on the input element as well
+    if (inputRef.current) {
+      inputRef.current.setCustomValidity(submitError);
+      inputRef.current.checkValidity();
+    }
+
     setIsValidating(false);
 
     // If the user's input is invalid, return and don't advance to the next step
@@ -199,7 +209,12 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
             </div>
           )}
         </div>
-        <ChatFormInput ref={inputRef} />
+        <ChatFormInput
+          ref={inputRef}
+          onInput={(e) => {
+            (e.target as HTMLInputElement).setCustomValidity('');
+          }}
+        />
         <ChatFormSubmitButton />
       </form>
     </div>
