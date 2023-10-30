@@ -52,7 +52,7 @@ export default function ThemeSwitch() {
         <FontAwesomeIcon icon={faSun} />
       </label>
       <label className={classNames(labelClasses, { 'text-blue-600': activeRadio === 'dark' })}>
-        <input type='radio' name='theme' value='dark' className='appearance-none' title='Dark theme'/>
+        <input type='radio' name='theme' value='dark' className='appearance-none' title='Dark theme' />
         <FontAwesomeIcon icon={faMoon} />
       </label>
       <label className={classNames(labelClasses, { 'text-zinc-800 dark:text-zinc-200': activeRadio === 'system' })}>
