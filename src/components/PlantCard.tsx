@@ -55,9 +55,7 @@ export default function PlantCard({ plant }: { plant: Plant }) {
             <div>
               <span className={'font-bold'}>Care Tips:</span> {plant.care}
             </div>
-            <div className='flex w-full flex-1 items-end justify-center text-center text-sm'>
-              {plant.name}
-            </div>
+            <div className='flex w-full flex-1 items-end justify-center text-center text-sm'>{plant.name}</div>
           </div>
         </div>
       </div>
