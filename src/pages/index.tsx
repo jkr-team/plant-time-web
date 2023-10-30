@@ -150,7 +150,12 @@ export default function Home() {
           <>
             <ThemeSwitch />
 
-            <button className='ml-auto mr-2 flex text-zinc-500' onClick={() => setShowAbout(!showAbout)}>
+            <button
+              type='button'
+              className='ml-auto mr-2 flex text-zinc-500'
+              title='About Plant Time'
+              onClick={() => setShowAbout(!showAbout)}
+            >
               <FontAwesomeIcon icon={faCircleQuestion} />
             </button>
 

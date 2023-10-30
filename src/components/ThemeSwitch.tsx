@@ -48,15 +48,15 @@ export default function ThemeSwitch() {
       }}
     >
       <label className={classNames(labelClasses, { 'text-yellow-600': activeRadio === 'light' })}>
-        <input type='radio' name='theme' value='light' className='appearance-none' />
+        <input type='radio' name='theme' value='light' className='appearance-none' title='Light theme' />
         <FontAwesomeIcon icon={faSun} />
       </label>
       <label className={classNames(labelClasses, { 'text-blue-600': activeRadio === 'dark' })}>
-        <input type='radio' name='theme' value='dark' className='appearance-none' />
+        <input type='radio' name='theme' value='dark' className='appearance-none' title='Dark theme'/>
         <FontAwesomeIcon icon={faMoon} />
       </label>
       <label className={classNames(labelClasses, { 'text-zinc-800 dark:text-zinc-200': activeRadio === 'system' })}>
-        <input type='radio' name='theme' value='system' className='appearance-none' />
+        <input type='radio' name='theme' value='system' className='appearance-none' title='Default to system theme' />
         <FontAwesomeIcon icon={faGear} />
       </label>
     </form>

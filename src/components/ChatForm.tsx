@@ -51,6 +51,7 @@ ChatFormInput.displayName = 'ChatFormInput';
 function ChatFormSubmitButton() {
   return (
     <button
+      title="Submit"
       className='flex w-12 cursor-pointer items-center justify-center rounded-full border-2 border-black border-opacity-10 text-green-800 shadow-md dark:border-white dark:border-opacity-30 dark:text-green-300'
       type='submit'
     >
@@ -157,6 +158,7 @@ export default function ChatForm({ steps, onSubmit }: ChatFormProps) {
     );
 
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [line]);
 
   return (
