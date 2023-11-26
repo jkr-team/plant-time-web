@@ -28,7 +28,6 @@ export default function Home() {
         'Welcome to Plant Time!',
         "We're here to help you decide what to plant in your garden.",
         'To get started, please let us know your general location.',
-        'You can enter "current" to use your current location.',
         'We will not store any of your information.',
       ],
       onSubmit: async (value) => {
@@ -39,7 +38,7 @@ export default function Home() {
         try {
           const input = value.toLowerCase().trim();
           /*await geocode(value)*/
-          const latlng = input == 'current' ? await getLocation() : { lat: 43.65107, lng: -79.347015 };
+          const latlng = { lat: 43.65107, lng: -79.347015 };
           const city = getClosestCity(latlng);
 
           setPreferences({ ...preferences, city });
