@@ -40,7 +40,7 @@ export default function PlantCard({ plant }: { plant: Plant }) {
             <span className='text-lg'>{plant.latinName}</span>
           </div>
 
-          <Image src={plant.image} alt={'Image of ' + plant.name} width={256} height={256} />
+          <Image src={plant.image} alt={'Image of ' + plant.name} width={256} height={256} className={"h-[256px] object-cover"} />
 
           <div className='flex w-full flex-col gap-1 bg-green-800 p-2 text-center text-white'>
             <span className='text-lg'>{plant.family} Family</span>

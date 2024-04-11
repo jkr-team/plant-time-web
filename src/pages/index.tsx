@@ -6,7 +6,7 @@ import { City, geocode, getClosestCity, getLocation } from '../utils/geolocation
 import PlantsGrid from '../components/PlantsGrid';
 import ThemeSwitch from '../components/ThemeSwitch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faFaceSadTear } from '@fortawesome/free-solid-svg-icons';
 import DigitalClock from '../components/DigitalClock';
 import About from '../components/About';
 import { Plant } from '../components/PlantCard';
@@ -100,46 +100,33 @@ export default function Home() {
     },
   ];
 
-  const [formCompleted, setFormCompleted] = useState(false);
-  const [showRecommendations, setShowRecommendations] = useState(false);
+  const [formCompleted, setFormCompleted] = useState(true);
+  const [showRecommendations, setShowRecommendations] = useState(true);
   const [showAbout, setShowAbout] = useState(false);
+  const [apiError, setApiError] = useState(null as Error | null);
 
   useEffect(() => {
     // Check if the form hasn't been completed or if we already have recommendations before making the API call
     if (!formCompleted || plants.length > 0) return;
 
-    // TODO: Make this a real API call
-    console.log(preferences);
+    // @ts-expect-error sometimes typescript makes me cry
+    const params = new URLSearchParams({ ...preferences, city: preferences.city?.name });
 
-    setPlants([
-      {
-        name: 'Janet Craig',
-        latinName: 'Dracaena deremensis',
-        image: 'http://www.tropicopia.com/house-plant/thumbnails/5556.jpg',
-        color: 'green',
-        family: 'Liliaceae',
-        height: 366,
-        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-      },
-      {
-        name: 'Lady palm',
-        latinName: 'Rhapis excelsa',
-        image: 'http://www.tropicopia.com/house-plant/thumbnails/5725.jpg',
-        color: 'pink',
-        family: 'Arecaceae',
-        height: 366,
-        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-      },
-      {
-        name: 'Tailflower',
-        latinName: 'Dracaena deremensis',
-        image: 'http://www.tropicopia.com/house-plant/thumbnails/5491.jpg',
-        color: 'lilac',
-        family: 'Araceae',
-        height: 61,
-        care: 'Water when soil is dry to the touch. Fertilize once a month during the growing season.',
-      },
-    ]);
+    fetch(`/api/plants${params}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+
+        throw new Error(`${response.status} ${response.statusText}`);
+      })
+      .then((data: Plant[]) => {
+        setPlants(data);
+      })
+      .catch((err) => {
+        // Display error to user
+        setApiError(err);
+      });
   }, [formCompleted]);
 
   return (
@@ -181,9 +168,18 @@ export default function Home() {
         )}
 
         {/* Recommended plants will appear in this grid */}
-        {showRecommendations && (
+        {showRecommendations && !apiError && (
           <div className='contents' inert={showAbout ? '' : undefined}>
             <PlantsGrid plants={plants} />
+          </div>
+        )}
+
+        {/* Error message if we failed to retrieve results from our api */}
+        {apiError && (
+          <div className='absolute left-1/2 top-[calc(50%_-_48px)] flex -translate-x-1/2 -translate-y-1/2 flex-col gap-6 text-center text-4xl text-red-800 transition-none dark:text-red-300'>
+            <FontAwesomeIcon className='text-8xl duration-700 animate-in fade-in' icon={faFaceSadTear} />
+
+            <span className="duration-700 animate-in fade-in">{apiError.message}</span>
           </div>
         )}
 
