@@ -45,7 +45,7 @@ export const ChatTypingIndicator = () => {
 
 export const Chat = ({ messages, isTyping }: ChatProps) => {
   return (
-    <div className='flex h-full w-full flex-col overflow-y-auto'>
+    <div className='flex flex-1 flex-col overflow-y-auto'>
       {messages.map((message, index) => (
         <div
           key={message.key || index}

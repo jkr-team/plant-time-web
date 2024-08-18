@@ -3,6 +3,7 @@ import Container from '../components/Container';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import Form from '../components/Form';
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
           </Link>
         </>
       }
-    ></Container>
+    >
+      <Form steps={[]} />
+    </Container>
   );
 }
