@@ -9,7 +9,7 @@ export default function About() {
     <Container
       top={
         <>
-          <Link className="text-zinc-800 dark:text-zinc-200" href='/'>
+          <Link className='text-zinc-800 dark:text-zinc-200' href='/'>
             <FontAwesomeIcon icon={faCircleLeft} />
           </Link>
         </>
