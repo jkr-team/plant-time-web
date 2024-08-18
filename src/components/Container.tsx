@@ -12,13 +12,13 @@ export default function Container({ top, children, wide = false }: ContainerProp
   return (
     <div
       className={twJoin(
-        'transition-[aspect-ratio] relative m-auto flex h-full w-full flex-col overflow-hidden shadow-2xl duration-700 dark:shadow-xl',
+        'relative m-auto flex h-full w-full flex-col overflow-hidden shadow-2xl transition-[aspect-ratio] duration-700 dark:shadow-xl',
         wide
           ? 'md:max-h-[min(95%,1080px)] md:max-w-[95%] md:rounded-3xl xl:aspect-[16/9] xl:h-[95vh] xl:w-auto'
           : 'md:aspect-[9/16] md:h-[95vh] md:max-h-[1080px] md:w-auto md:rounded-3xl'
       )}
     >
-      <div className='z-20 flex items-center justify-between gap-4 bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
+      <div className='z-20 flex min-h-[48px] items-center justify-between gap-4 bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
         <ThemeSwitch />
         {top}
       </div>

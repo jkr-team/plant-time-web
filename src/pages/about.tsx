@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { twJoin } from 'tailwind-merge';
 
-export default function About() {
+export default function AboutPage() {
   const linkClasses = twJoin(
     'w-fit py-1 px-2 rounded-xl text-center text-lg transition-[background-color]',
     'hover:bg-green-500 focus:bg-green-500 dark:hover:bg-green-500 dark:focus:bg-green-500',
@@ -16,7 +16,7 @@ export default function About() {
     <Container
       top={
         <>
-          <Link className='text-zinc-800 dark:text-zinc-200' href='/' aria-label='Go Back Home'>
+          <Link className='text-zinc-500' href='/' aria-label='Go Back Home'>
             <FontAwesomeIcon icon={faCircleLeft} />
           </Link>
         </>
