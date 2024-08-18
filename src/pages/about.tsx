@@ -1,8 +1,20 @@
 import React from 'react';
+import Container from '../components/Container';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function About() {
   return (
-    <>
+    <Container
+      top={
+        <>
+          <Link href='/'>
+            <FontAwesomeIcon icon={faCircleLeft} />
+          </Link>
+        </>
+      }
+    >
       <div className='flex w-full max-w-xl flex-col items-center justify-center gap-8 p-4 text-lg'>
         <h1 className='text-center text-4xl font-bold'>About</h1>
         <p className='text-center text-lg'>
@@ -27,6 +39,6 @@ export default function About() {
           View the source code on Github!
         </a>
       </div>
-    </>
+    </Container>
   );
 }
