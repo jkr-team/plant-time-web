@@ -18,10 +18,8 @@ export default function Container({ top, children, wide = false }: ContainerProp
           : 'md:aspect-[9/16] md:h-[95vh] md:max-h-[1080px] md:w-auto md:rounded-3xl'
       )}
     >
-      <div className='z-20 flex items-center bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
-        <div className='mr-auto'>
-          <ThemeSwitch />
-        </div>
+      <div className='z-20 flex gap-4 items-center justify-between bg-zinc-100 px-4 py-2 text-2xl dark:bg-zinc-800'>
+        <ThemeSwitch />
         {top}
       </div>
       <div className='relative flex w-full flex-1 flex-col items-center bg-white dark:bg-zinc-900'>{children}</div>
