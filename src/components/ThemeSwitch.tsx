@@ -40,7 +40,7 @@ export default function ThemeSwitch() {
 
   return (
     <form
-      className='focus-within:b relative flex items-center justify-center gap-10 rounded-3xl border-blue-600 text-zinc-500 focus-within:border-2 md:gap-4'
+      className='relative flex items-center justify-center gap-10 rounded-3xl text-zinc-500 ring-blue-600 md:gap-4 [&:has(:focus-visible)]:ring-2'
       onChange={(e) => {
         const theme = (e.target as HTMLInputElement).value;
         setActiveRadio(theme);
