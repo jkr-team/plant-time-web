@@ -12,7 +12,7 @@ export default function Container({ top, children, wide = false }: ContainerProp
   return (
     <div
       className={twJoin(
-        'transition-aspect relative m-auto flex h-full w-full flex-col overflow-hidden shadow-2xl duration-700 dark:shadow-xl',
+        'transition-[aspect-ratio] relative m-auto flex h-full w-full flex-col overflow-hidden shadow-2xl duration-700 dark:shadow-xl',
         wide
           ? 'md:max-h-[min(95%,1080px)] md:max-w-[95%] md:rounded-3xl xl:aspect-[16/9] xl:h-[95vh] xl:w-auto'
           : 'md:aspect-[9/16] md:h-[95vh] md:max-h-[1080px] md:w-auto md:rounded-3xl'
