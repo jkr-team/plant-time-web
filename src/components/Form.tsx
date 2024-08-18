@@ -4,24 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../img/logo.svg';
 
-export type FormStep = {
+export interface FormControl {
   id: string;
-  prompt: string[];
-  // Callback for when the user submits this step, return a promise that resolves to a string, if the string is empty, the user will advance to the next step, otherwise the string will be treated as an error message that will be displayed to the user.
-  onSubmit: (value: string) => Promise<string>;
-};
+  messages: string[];
+  type: 'text' | 'select' | 'number';
+  // Function used to validate user input (unnecessary for select type)
+  validator?: (value: string) => Promise<boolean>;
+}
 
-type CompletedFormStep = {
-  step: FormStep;
-  value: string | number;
-};
-
-type ChatFormProps = {
-  steps: FormStep[];
+export interface FormProps {
+  controls: FormControl[];
   onSubmit?: () => void;
-};
+}
 
-export default function Form({ steps, onSubmit }: ChatFormProps) {
+export default function Form({ controls, onSubmit }: FormProps) {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
