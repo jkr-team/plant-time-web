@@ -9,7 +9,7 @@ export default function Home() {
     <Container
       top={
         <>
-          <Link className='text-zinc-800 dark:text-zinc-200' href='/about'>
+          <Link className='text-zinc-800 dark:text-zinc-200' href='/about' aria-label='About Plant Time'>
             <FontAwesomeIcon icon={faCircleQuestion} />
           </Link>
         </>
