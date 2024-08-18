@@ -12,11 +12,11 @@
   }
 
   body {
-    @apply flex min-h-full flex-col;
+    @apply h-full;
   }
 
   #__next {
-    @apply contents;
+    @apply h-full;
   }
 }
 

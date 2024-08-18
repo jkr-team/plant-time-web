@@ -9,7 +9,7 @@ const robotoCondensed = Roboto_Condensed({ subsets: ['latin'], weight: ['300', '
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={`contents ${robotoCondensed.className}`}>
+    <div className={`flex flex-col justify-center items-center h-full w-full ${robotoCondensed.className}`}>
       <Component {...pageProps} />
     </div>
   );
