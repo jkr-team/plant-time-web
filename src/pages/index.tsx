@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <Container top={<>
-      <Link href='/about'>
+      <Link className="text-zinc-800 dark:text-zinc-200" href='/about'>
         <FontAwesomeIcon icon={faCircleQuestion} />
       </Link>
     </>}></Container>
