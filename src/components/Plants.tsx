@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import Image from 'next/image';
+import React, { useState } from 'react';
 import classNames from 'classnames';
+import Image from 'next/image';
 
 export type Plant = {
   name: string;
@@ -12,8 +12,8 @@ export type Plant = {
   color: string;
 };
 
-export default function PlantCard({ plant }: { plant: Plant }) {
-  const [flipped, setFlipped] = React.useState(false);
+export const PlantCard = ({ plant }: { plant: Plant }) => {
+  const [flipped, setFlipped] = useState(false);
 
   return (
     <div
@@ -40,7 +40,13 @@ export default function PlantCard({ plant }: { plant: Plant }) {
             <span className='text-lg'>{plant.latinName}</span>
           </div>
 
-          <Image src={plant.image} alt={'Image of ' + plant.name} width={256} height={256} className={"h-[256px] object-cover"} />
+          <Image
+            src={plant.image}
+            alt={'Image of ' + plant.name}
+            width={256}
+            height={256}
+            className={'h-[256px] object-cover'}
+          />
 
           <div className='flex w-full flex-col gap-1 bg-green-800 p-2 text-center text-white'>
             <span className='text-lg'>{plant.family} Family</span>
@@ -61,4 +67,16 @@ export default function PlantCard({ plant }: { plant: Plant }) {
       </div>
     </div>
   );
-}
+};
+
+export const PlantsGrid = ({ plants }: { plants: Plant[] }) => {
+  return (
+    <div className='flex w-full flex-1 basis-0 justify-center overflow-y-auto'>
+      <div className='my-auto grid w-full justify-center justify-items-center gap-8 bg-white p-8 [grid-template-columns:repeat(auto-fill,_290px)] dark:bg-zinc-900'>
+        {plants.map((plant) => (
+          <PlantCard plant={plant} key={plant.latinName + plant.name} />
+        ))}
+      </div>
+    </div>
+  );
+};
