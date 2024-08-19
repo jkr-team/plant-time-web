@@ -25,7 +25,7 @@ export const AppIcon = ({ data }: AppIconProps) => {
         {data.icon}
       </Link>
 
-      <span className='text-center w-[min-content]'>{data.title}</span>
+      <span className='w-[min-content] text-center'>{data.title}</span>
     </div>
   );
 };
