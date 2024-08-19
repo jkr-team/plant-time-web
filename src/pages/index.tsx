@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from '../components/Container';
 import { Apps } from '../components/Apps';
+import Logo from '../img/logo.svg';
 
 export default function HomePage() {
   return (

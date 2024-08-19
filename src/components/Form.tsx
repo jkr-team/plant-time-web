@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Chat } from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faLeaf, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Logo from '../img/logo.svg';
+import { LogoBackground } from './LogoBackground';
 
 export interface FormControl {
   id: string;
@@ -23,9 +23,7 @@ export default function Form({ controls, onSubmit }: FormProps) {
 
   return (
     <div className='relative flex max-h-full w-full flex-1 flex-col'>
-      <div className='absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-green-600 opacity-10 dark:text-green-300'>
-        <Logo className='w-48' />
-      </div>
+      <LogoBackground />
 
       <Chat messages={messages} isTyping={isTyping} />
 
