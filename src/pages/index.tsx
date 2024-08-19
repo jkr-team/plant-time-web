@@ -1,30 +1,52 @@
 import React from 'react';
 import { Container } from '../components/Container';
 import { Apps } from '../components/Apps';
-import Logo from '../img/logo.svg';
+import { LogoBackground } from '../components/LogoBackground';
+import { useTime } from '../utils/useTime';
 
 export default function HomePage() {
+  const date = new Date().toLocaleDateString(undefined, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const time = useTime('minute');
+
   return (
     <Container>
-      <Apps
-        data={[
-          {
-            title: 'Get Recommendations',
-            url: '/recommendations',
-            icon: <div className='h-full w-full'></div>,
-          },
-          {
-            title: 'View All',
-            url: '/plants',
-            icon: <div className='h-full w-full'></div>,
-          },
-          {
-            title: 'About',
-            url: '/about',
-            icon: <div className='h-full w-full'></div>,
-          },
-        ]}
-      />
+      <div className='relative flex w-full flex-1 flex-col items-center gap-4 py-10 px-4'>
+        <LogoBackground />
+
+        <span className='text-xl'>{date}</span>
+
+        <span className='text-6xl' suppressHydrationWarning={true}>
+          {time.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}
+        </span>
+
+        <div className='w-full mt-auto'>
+          <Apps
+            data={[
+              {
+                title: 'Suggestions',
+                url: '/suggestions',
+                icon: <div className='h-full w-full'></div>,
+              },
+              {
+                title: 'Plants Directory',
+                url: '/plants',
+                icon: <div className='h-full w-full'></div>,
+              },
+              {
+                title: 'About',
+                url: '/about',
+                icon: <div className='h-full w-full'></div>,
+              },
+            ]}
+          />
+        </div>
+      </div>
     </Container>
   );
 }
