@@ -25,16 +25,18 @@ export default function HomePage() {
           {time.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}
         </span>
 
+        <span>Welcome to Plant Time!</span>
+
         <div className='w-full mt-auto'>
           <Apps
             data={[
               {
-                title: 'Suggestions',
+                title: 'Get Suggestions',
                 url: '/suggestions',
                 icon: <div className='h-full w-full'></div>,
               },
               {
-                title: 'Plants Directory',
+                title: 'View Plants',
                 url: '/plants',
                 icon: <div className='h-full w-full'></div>,
               },
