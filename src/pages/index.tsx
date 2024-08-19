@@ -1,5 +1,4 @@
 import React from 'react';
-import { Page } from '../components/Page';
 import { Apps } from '../components/Apps';
 import { LogoBackground } from '../components/LogoBackground';
 import { useTime } from '../utils/useTime';
