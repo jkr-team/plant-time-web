@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../components/Container';
+import { Container } from '../components/Container';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';

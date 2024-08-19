@@ -8,7 +8,7 @@ export interface ContainerProps {
   wide?: boolean;
 }
 
-export default function Container({ top, children, wide = false }: ContainerProps) {
+export const Container = ({ top, children, wide = false }: ContainerProps) => {
   return (
     <div
       className={twJoin(
