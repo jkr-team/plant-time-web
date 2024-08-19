@@ -20,12 +20,12 @@ export const AppIcon = ({ data }: AppIconProps) => {
     <div className='flex flex-col items-center gap-4'>
       <Link
         href={data.url}
-        className='flex aspect-square w-16 items-center justify-center rounded-xl bg-zinc-50 shadow-xl transition-[transform,box-shadow] hover:scale-105 hover:shadow-2xl dark:bg-zinc-800'
+        className='flex aspect-square w-16 items-center justify-center overflow-hidden rounded-xl bg-zinc-50 shadow-xl transition-[transform,box-shadow] hover:scale-105 hover:shadow-2xl dark:bg-zinc-800'
       >
         {data.icon}
       </Link>
 
-      <span className='w-[min-content] text-center'>{data.title}</span>
+      <span className='text-center text-sm'>{data.title}</span>
     </div>
   );
 };

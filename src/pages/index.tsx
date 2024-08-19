@@ -4,6 +4,8 @@ import { LogoBackground } from '../components/LogoBackground';
 import { useTime } from '../utils/useTime';
 import { motion } from 'framer-motion';
 import { Layout } from '../components/Layout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleQuestion, faLeaf, faList } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage() {
   const date = new Date().toLocaleDateString(undefined, {
@@ -34,17 +36,29 @@ export default function HomePage() {
               {
                 title: 'Get Suggestions',
                 url: '/suggestions',
-                icon: <div className='h-full w-full'></div>,
+                icon: (
+                  <div className='flex h-full w-full items-center justify-center text-4xl'>
+                    <FontAwesomeIcon icon={faList} />
+                  </div>
+                ),
               },
               {
                 title: 'View Plants',
                 url: '/plants',
-                icon: <div className='h-full w-full'></div>,
+                icon: (
+                  <div className='flex h-full w-full items-center justify-center text-4xl text-green-500'>
+                    <FontAwesomeIcon icon={faLeaf} />
+                  </div>
+                ),
               },
               {
                 title: 'About',
                 url: '/about',
-                icon: <div className='h-full w-full'></div>,
+                icon: (
+                  <div className='flex h-full w-full items-center justify-center text-4xl'>
+                    <FontAwesomeIcon icon={faCircleQuestion} />
+                  </div>
+                ),
               },
             ]}
           />
