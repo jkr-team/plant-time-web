@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 
 export type Plant = {
+  id: string;
   name: string;
   latinName: string;
   image: string;
