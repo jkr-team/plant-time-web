@@ -9,13 +9,13 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { useRouter } from 'next/router';
+import { AnimatePresence } from 'framer-motion';
 config.autoAddCss = false;
 
 const robotoCondensed = Roboto_Condensed({ subsets: ['latin'], weight: ['300', '400', '700'] });
 
-export default function App({ Component, pageProps }: AppProps) {
-  const { pathname } = useRouter();
+export default function App({ Component, pageProps, router }: AppProps) {
+  const pathname = router.asPath;
   const wide = pageProps?.wide ?? false;
 
   return (
@@ -39,7 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
 
         <div className='relative flex w-full flex-1 flex-col items-center bg-white dark:bg-zinc-900'>
-          <Component {...pageProps} />
+          <AnimatePresence mode='wait' initial={false}>
+            <Component {...pageProps} key={router.asPath} />
+          </AnimatePresence>
         </div>
       </div>
     </div>

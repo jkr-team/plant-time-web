@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -9,7 +10,17 @@ export default function AboutPage() {
   );
 
   return (
-    <div className='flex w-full max-w-xl flex-col items-center justify-center gap-8 p-4 text-lg'>
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 300, opacity: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 20,
+      }}
+      className='flex w-full max-w-xl flex-col items-center justify-center gap-8 p-4 text-lg'
+    >
       <h1 className='text-center text-4xl font-bold'>About</h1>
       <p className='text-center text-lg'>
         Plant Time is a web app that helps you decide what to plant in your garden. It uses your location and
@@ -32,6 +43,6 @@ export default function AboutPage() {
       <a href='https://github.com/plant-time-team' className={linkClasses}>
         View the source code on Github!
       </a>
-    </div>
+    </motion.div>
   );
 }

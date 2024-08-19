@@ -15,7 +15,17 @@ export default function HomePage() {
   const time = useTime('minute');
 
   return (
-    <div className='relative flex w-full flex-1 flex-col items-center gap-4 px-4 py-10'>
+    <motion.div
+      initial={{ y: 300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 300, opacity: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 20,
+      }}
+      className='relative flex w-full flex-1 flex-col items-center gap-4 px-4 py-10'
+    >
       <LogoBackground />
 
       <span className='text-xl'>{date}</span>
@@ -47,6 +57,6 @@ export default function HomePage() {
           ]}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
