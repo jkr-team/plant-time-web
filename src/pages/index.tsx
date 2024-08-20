@@ -5,7 +5,7 @@ import { useTime } from '../utils/useTime';
 import { motion } from 'framer-motion';
 import { Layout } from '../components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion, faLeaf, faList } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faLeaf, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage() {
   const date = new Date().toLocaleDateString(undefined, {
@@ -19,8 +19,8 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className='relative flex w-full flex-1 flex-col items-center gap-8 px-4 py-10'>
-        <h1 className="text-3xl">Welcome to Plant Time!</h1>
+      <div className='relative flex w-full flex-1 flex-col items-center px-4 py-10'>
+        <h1 className="text-4xl text-center">Welcome to Plant Time!</h1>
 
         <div className='flex-1 w-full max-h-[600px] my-auto z-20'>
           <Apps
@@ -29,8 +29,8 @@ export default function HomePage() {
                 title: 'Get Suggestions',
                 url: '/suggestions',
                 icon: (
-                  <div className='flex h-full w-full items-center justify-center text-6xl bg-green-200 dark:bg-green-950 dark:text-green-500'>
-                    <FontAwesomeIcon icon={faList} />
+                  <div className='flex h-full w-full items-center justify-center text-6xl bg-green-200 dark:bg-green-950 '>
+                    <FontAwesomeIcon icon={faWandMagicSparkles} />
                   </div>
                 ),
               },
