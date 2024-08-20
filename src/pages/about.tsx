@@ -12,7 +12,7 @@ export default function AboutPage() {
 
   return (
     <Layout>
-      <div className='flex w-full max-w-xl flex-col items-center justify-center gap-8 p-4 text-lg'>
+      <div className='flex w-full flex-col items-center justify-center gap-8 p-14 text-lg'>
         <h1 className='text-center text-4xl font-bold'>About</h1>
         <p className='text-center text-lg'>
           Plant Time is a web app that helps you decide what to plant in your garden. It uses your location and
