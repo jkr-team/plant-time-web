@@ -19,25 +19,17 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className='relative flex w-full flex-1 flex-col items-center gap-4 px-4 py-10'>
-        <LogoBackground />
+      <div className='relative flex w-full flex-1 flex-col items-center gap-8 px-4 py-10'>
+        <h1 className="text-3xl">Welcome to Plant Time!</h1>
 
-        <span className='text-xl'>{date}</span>
-
-        <span className='text-6xl' suppressHydrationWarning={true}>
-          {time.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}
-        </span>
-
-        <span>Welcome to Plant Time!</span>
-
-        <div className='mt-auto w-full'>
+        <div className='flex-1 w-full max-h-[600px] my-auto z-20'>
           <Apps
             data={[
               {
                 title: 'Get Suggestions',
                 url: '/suggestions',
                 icon: (
-                  <div className='flex h-full w-full items-center justify-center text-4xl'>
+                  <div className='flex h-full w-full items-center justify-center text-6xl bg-green-200 dark:bg-green-950 dark:text-green-500'>
                     <FontAwesomeIcon icon={faList} />
                   </div>
                 ),
@@ -46,7 +38,7 @@ export default function HomePage() {
                 title: 'View Plants',
                 url: '/plants',
                 icon: (
-                  <div className='flex h-full w-full items-center justify-center text-4xl text-green-500'>
+                  <div className='flex h-full w-full items-center justify-center text-6xl text-green-500 bg-sky-100 dark:bg-sky-950'>
                     <FontAwesomeIcon icon={faLeaf} />
                   </div>
                 ),
@@ -55,7 +47,7 @@ export default function HomePage() {
                 title: 'About',
                 url: '/about',
                 icon: (
-                  <div className='flex h-full w-full items-center justify-center text-4xl'>
+                  <div className='flex h-full w-full items-center justify-center text-6xl'>
                     <FontAwesomeIcon icon={faCircleQuestion} />
                   </div>
                 ),
