@@ -2,7 +2,6 @@ import React from 'react';
 import { Apps } from '../components/Apps';
 import LogoSVG from '../img/logo.svg';
 import { useTime } from '../utils/useTime';
-import { motion } from 'framer-motion';
 import { Layout } from '../components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleQuestion, faLeaf, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';

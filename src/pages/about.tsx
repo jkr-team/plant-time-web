@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 import { twJoin } from 'tailwind-merge';
 import { Layout } from '../components/Layout';
