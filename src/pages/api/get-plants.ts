@@ -1,15 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { type Plant } from '../../components/Plants';
 
-type ResponseData = {
-  results?: Plant[];
-  error?: {
-    code: string;
-    message: string;
-  };
-};
+type ResponseData =
+  | Plant[]
+  | {
+      error: {
+        code: string;
+        message: string;
+      };
+    };
 
-const pageSize = 10;
+const MAX_LIMIT = 50;
+const DEFAULT_LIMIT = 10;
+
 const data: Plant[] = [
   {
     id: 'c7d22e72-5bc3-4efc-a0e3-045aed4123b8',
@@ -66,7 +69,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
-  res.status(200).json({
-    results: data.slice(page * pageSize, (page + 1) * pageSize),
-  });
+  const limit = typeof req.query.limit === 'string' ? Number.parseInt(req.query.limit) : DEFAULT_LIMIT;
+
+  if (isNaN(limit) || limit < 0 || limit > MAX_LIMIT) {
+    res.status(405).send({
+      error: {
+        code: 'INVALID_QUERY',
+        message: `Limit parameter must be a positive integer <= ${MAX_LIMIT}`,
+      },
+    });
+    return;
+  }
+
+  res.status(200).json(data.slice(page * limit, (page + 1) * limit));
 }
