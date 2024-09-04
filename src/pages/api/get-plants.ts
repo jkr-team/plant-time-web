@@ -9,6 +9,7 @@ type ResponseData = {
   };
 };
 
+const pageSize = 10;
 const data: Plant[] = [
   {
     id: 'c7d22e72-5bc3-4efc-a0e3-045aed4123b8',
@@ -43,47 +44,29 @@ const data: Plant[] = [
 ];
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  if (req.method !== 'POST') {
+  if (req.method !== 'GET') {
     res.status(405).send({
       error: {
         code: 'INVALID_METHOD',
-        message: 'Only POST requests are accepted',
+        message: 'Only GET requests are accepted',
       },
     });
     return;
   }
 
-  if (!Array.isArray(req.body)) {
-    res.status(400).json({
+  const page = typeof req.query.page === 'string' ? Number.parseInt(req.query.page) : 0;
+
+  if (isNaN(page) || page < 0) {
+    res.status(405).send({
       error: {
-        code: 'INVALID_BODY_TYPE',
-        message: 'Request body must be a JSON array of strings.',
+        code: 'INVALID_QUERY',
+        message: 'Page parameter must be a positive integer',
       },
     });
     return;
-  }
-
-  const LIMIT = 10;
-  const ids = Array.from(new Set(req.body));
-
-  const plants: Plant[] = ids
-    .slice(0, LIMIT)
-    .map((id) => {
-      return data.find((p) => p.id === id);
-    })
-    .filter(Boolean) as Plant[];
-
-  if (ids.length > LIMIT) {
-    res.status(200).json({
-      results: plants,
-      error: {
-        code: 'OVER_LIMIT',
-        message: `More than ${LIMIT} IDs were provided, details for only the first ${LIMIT} ids are given`,
-      },
-    });
   }
 
   res.status(200).json({
-    results: plants,
+    results: data.slice(page * pageSize, (page + 1) * pageSize),
   });
 }
