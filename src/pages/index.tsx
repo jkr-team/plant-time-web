@@ -24,7 +24,7 @@ export default function HomePage() {
           <h1>Plant Time</h1>
         </div>
 
-        <div className='z-20 my-auto max-h-[600px] w-full flex-1'>
+        <div className='z-20 my-auto max-h-[500px] w-full flex-1'>
           <Apps
             data={[
               {

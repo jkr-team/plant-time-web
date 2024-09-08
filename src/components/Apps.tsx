@@ -20,7 +20,7 @@ export const AppIcon = ({ data }: AppIconProps) => {
     <div className='flex flex-col items-center gap-4 flex-1'>
       <Link
         href={data.url}
-        className='flex aspect-square h-full items-center justify-center overflow-hidden rounded-xl bg-zinc-50 shadow-xl transition-[transform,box-shadow] hover:scale-105 hover:shadow-2xl dark:bg-zinc-800'
+        className='flex aspect-square h-full items-center justify-center overflow-hidden rounded-xl bg-zinc-50 transition-[transform,box-shadow] hover:scale-105 hover:shadow-md dark:bg-zinc-800'
       >
         {data.icon}
       </Link>
