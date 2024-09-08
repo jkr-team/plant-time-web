@@ -73,7 +73,7 @@ export const PlantCard = ({ plant }: { plant: Plant }) => {
 export const PlantsGrid = ({ plants }: { plants: Plant[] }) => {
   return (
     <div className='flex w-full flex-1 basis-0 justify-center overflow-y-auto'>
-      <div className='my-auto grid w-full justify-center justify-items-center gap-8 bg-white p-8 [grid-template-columns:repeat(auto-fill,_290px)] dark:bg-zinc-900'>
+      <div className='grid w-full justify-center justify-items-center gap-8 bg-white p-8 [grid-template-columns:repeat(auto-fill,_290px)] dark:bg-zinc-900'>
         {plants.map((plant) => (
           <PlantCard plant={plant} key={plant.latinName + plant.name} />
         ))}

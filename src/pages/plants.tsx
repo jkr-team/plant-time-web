@@ -3,7 +3,7 @@ import { Layout } from '../components/Layout';
 import { type Plant, PlantsGrid } from '../components/Plants';
 import useSWRInfinite from 'swr/infinite';
 
-const LIMIT = 2;
+const LIMIT = 1;
 
 export const getStaticProps = async () => {
   return {
@@ -39,7 +39,7 @@ export default function PlantsPage() {
   return (
     <Layout>
       <PlantsGrid plants={plants ?? []} />
-      {!isDone && <button onClick={() => setSize(size + 1)}>Load More</button>}
+      {!isDone && <button className="bg-green-500 absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 text-white rounded-full" onClick={() => setSize(size + 1)}>Load More</button>}
     </Layout>
   );
 }
